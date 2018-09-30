@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StaticInjector should be creatable with class provider 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    Token {
+      "_id": "service",
+      "injectable": undefined,
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": true,
+      "value": Array [],
+    },
+  },
+  "parent": NullInjector {},
+  "scope": null,
+}
+`;
+
+exports[`StaticInjector should be creatable with common value providers 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    Token {
+      "_id": "locale",
+      "injectable": undefined,
+    } => Object {
+      "fn": [Function],
+      "requires": Array [
+        Object {
+          "options": 0,
+          "token": Object {
+            "multiple": true,
+            "provide": Token {
+              "_id": "locale",
+              "injectable": undefined,
+            },
+            "useValue": "en",
+          },
+        },
+        Object {
+          "options": 0,
+          "token": Object {
+            "multiple": true,
+            "provide": Token {
+              "_id": "locale",
+              "injectable": undefined,
+            },
+            "useValue": "de",
+          },
+        },
+      ],
+      "token": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useNew": false,
+      "value": Array [],
+    },
+    Object {
+      "multiple": true,
+      "provide": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useValue": "en",
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": false,
+      "value": "en",
+    },
+    Object {
+      "multiple": true,
+      "provide": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useValue": "de",
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": false,
+      "value": "de",
+    },
+  },
+  "parent": NullInjector {},
+  "scope": null,
+}
+`;
+
+exports[`StaticInjector should be creatable with multiple value providers 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    Token {
+      "_id": "locale",
+      "injectable": undefined,
+    } => Object {
+      "fn": [Function],
+      "requires": Array [
+        Object {
+          "options": 0,
+          "token": Object {
+            "multiple": true,
+            "provide": Token {
+              "_id": "locale",
+              "injectable": undefined,
+            },
+            "useValue": "en",
+          },
+        },
+        Object {
+          "options": 0,
+          "token": Object {
+            "multiple": true,
+            "provide": Token {
+              "_id": "locale",
+              "injectable": undefined,
+            },
+            "useValue": "de",
+          },
+        },
+      ],
+      "token": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useNew": false,
+      "value": Array [],
+    },
+    Object {
+      "multiple": true,
+      "provide": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useValue": "en",
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": false,
+      "value": "en",
+    },
+    Object {
+      "multiple": true,
+      "provide": Token {
+        "_id": "locale",
+        "injectable": undefined,
+      },
+      "useValue": "de",
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": false,
+      "value": "de",
+    },
+  },
+  "parent": NullInjector {},
+  "scope": null,
+}
+`;
+
+exports[`StaticInjector should be creatable with value provider 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    Token {
+      "_id": "locale",
+      "injectable": undefined,
+    } => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "useNew": false,
+      "value": "en",
+    },
+  },
+  "parent": NullInjector {},
+  "scope": null,
+}
+`;
+
+exports[`StaticInjector should be creatable without providers 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+  },
+  "parent": NullInjector {},
+  "scope": null,
+}
+`;
+
+exports[`StaticInjector should be creatable without providers and parent 1`] = `
+StaticInjector {
+  "_records": Map {
+    [Function] => Object {
+      "fn": [Function],
+      "requires": Array [],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+  },
+  "parent": StaticInjector {
+    "_records": Map {
+      [Function] => Object {
+        "fn": [Function],
+        "requires": Array [],
+        "token": [Function],
+        "useNew": false,
+        "value": [Circular],
+      },
+    },
+    "parent": NullInjector {},
+    "scope": null,
+  },
+  "scope": null,
+}
+`;

@@ -1,0 +1,17 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": "./",
+		"baseUrl": "./",
+		"sourceMap": true,
+		"declaration": true,
+		"module": "es2015",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"target": "es2015",
+		"lib": ["es2017"]
+	},
+	"include": ["**/*.ts"],
+	"exclude": ["node_modules", "**/*.d.ts", "**/node_modules", "**/*.spec.ts", "dist"]
+}
