@@ -1,100 +1,52 @@
-import { Type } from './Type';
-import { Token } from './Token';
-import { InjectorFlags } from './Flags';
-import { StaticProvider, ValueProvider } from './Providers';
-import { resolveToken, resolveProviders } from './resolvers';
+import { IConstructable } from './Constructable';
+import { StaticProvider } from './Provider';
+import { NullInjector } from './NullInjector';
+import { THROW_IF_NOT_FOUND } from './utils';
+import { InjectionToken } from './InjectionToken';
+import { InjectorOptionFlags } from './Flags';
+import { IInjectable } from './Injectable';
 
-export class NullInjector implements Injector {
-	get(token: any, notFoundValue: any = Injector.THROW_IF_NOT_FOUND): any {
-		if (notFoundValue === Injector.THROW_IF_NOT_FOUND) {
-			throw new Error(`NullInjectorError: No provider for ${token}!`);
-		}
-
-		return notFoundValue;
-	}
+export interface IInjectorType<T> extends IConstructable<T> {
+	injector: IInjector<T>;
 }
 
-export const NULL_INJECTOR = new NullInjector();
-export const IDENT = function<T>(value: T): T {
-	return value;
-};
-export const EMPTY = <any[]>[];
-export const CIRCULAR = IDENT;
-export const COMMON_PROVIDER_FN = function(): any[] {
-	return Array.prototype.slice.call(arguments);
-};
-export const USE_VALUE = 'useValue';
-
-export interface InjectedRecord {
-	fn: Function;
-	useNew: boolean;
-	requires: DependencyRecord[];
-	value: any;
+export interface IInjectorTypeWithProviders<T> {
+	pointer: IInjectorType<T>;
+	providers?: StaticProvider[];
 }
 
-export interface DependencyRecord {
-	token: any;
-	options: number;
-}
-
-export type InjectorCreationOptions = {
+export interface IInjector<T> {
+	factory: () => T;
 	providers: StaticProvider[];
-	parent?: Injector;
-	name?: string;
-};
-
-export class StaticInjector implements Injector {
-	private _records: Map<any, InjectedRecord>;
-
-	constructor(
-		providers: StaticProvider[],
-		private parent: Injector = NULL_INJECTOR,
-		private scope: string | null = null
-	) {
-		const records = (this._records = new Map<any, InjectedRecord>());
-		records.set(Injector, <InjectedRecord>{
-			token: Injector,
-			fn: IDENT,
-			requires: [],
-			value: this,
-			useNew: false,
-		});
-		// records.set(INJECTOR, <InjectedRecord>{ token: INJECTOR, fn: IDENT, deps: EMPTY, value: this, useNew: false });
-		// recursivelyProcessProviders(records, providers);
-		resolveProviders(records, providers);
-	}
-
-	get<T>(token: Type<T> | Token<T>, notFoundValue?: T, flags?: InjectorFlags): T;
-	get(token: any, notFoundValue?: any): any;
-	get(token: any, notFoundValue?: any, flags: InjectorFlags = InjectorFlags.Default): any {
-		const record = this._records.get(token);
-		try {
-			return resolveToken({
-				token,
-				flags,
-				record,
-				notFoundValue,
-				records: this._records,
-				parent: this.parent,
-			});
-		} catch (e) {
-			throw e;
-		}
-	}
+	imports: (IInjectorType<any> | IInjectorTypeWithProviders<any>)[];
 }
 
-export abstract class Injector {
-	static THROW_IF_NOT_FOUND = new Object();
-	static NULL: Injector = new NullInjector();
+export type CommonInjectorCreateOptions =
+	| StaticProvider[]
+	| {
+			providers: StaticProvider[];
+			parent?: CommonInjector;
+			name?: string;
+	  };
 
-	abstract get<T>(token: Type<T> | Token<T>, notFoundValue?: T, flags?: InjectorFlags): T;
+export abstract class CommonInjector {
+	static NULL: CommonInjector = new NullInjector();
 
-	static create(providers: InjectorCreationOptions): Injector;
-	static create(providers: StaticProvider[] | InjectorCreationOptions, parent?: Injector): Injector {
-		if (Array.isArray(providers) /* assume static providers */) {
-			return new StaticInjector(providers, parent);
+	abstract get<T>(token: IConstructable<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjectorOptionFlags): T;
+
+	static create(options: CommonInjectorCreateOptions): CommonInjector;
+	static create(options: CommonInjectorCreateOptions, parent?: CommonInjector): CommonInjector {
+		if (Array.isArray(options)) {
+			return new StaticInjector(options, parent);
 		} else {
-			return new StaticInjector(providers.providers, providers.parent, providers.name || null);
+			return new StaticInjector(options.providers, options.parent, options.name || null);
 		}
 	}
+
+	static injectable = <IInjectable<any>>{
+		providedIn: 'any',
+		factory: () => undefined as any,
+		scope: 'root',
+		value: undefined,
+	};
 }
