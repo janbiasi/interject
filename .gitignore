@@ -66,3 +66,6 @@ typings/
 
 # compliation output
 dist
+
+# macOS files
+.DS_Store
