@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Injector basics should be creatable with providers 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "testProviderToken1",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": undefined,
+      "token": InjectionToken {
+        "_id": "testProviderToken1",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": 10,
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector different providers ClassProvider should resolve a single class from a provider 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "testServiceToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "testServiceToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": TestService {},
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector different providers ClassProvider should resolve multiple request to the same instance 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "testServiceToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "testServiceToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": TestService {},
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector different providers ValueProvider should resolve a single value from a value provider 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "testProviderToken3",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": undefined,
+      "token": InjectionToken {
+        "_id": "testProviderToken3",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": 10,
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector inheritance should resolve from parent 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "testProviderToken2",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": undefined,
+      "token": InjectionToken {
+        "_id": "testProviderToken2",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": 10,
+    },
+  },
+  "parent": Injector {
+    "_injections": Map {
+      [Function] => Object {
+        "dependencies": Array [],
+        "factory": [Function],
+        "token": [Function],
+        "useNew": false,
+        "value": [Circular],
+      },
+      InjectionToken {
+        "_id": "testProviderToken2",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      } => Object {
+        "dependencies": Array [],
+        "factory": undefined,
+        "token": InjectionToken {
+          "_id": "testProviderToken2",
+          "injectable": Object {
+            "factory": [Function],
+            "scope": "root",
+            "value": undefined,
+          },
+          "metadataName": "InjectionToken",
+        },
+        "useNew": false,
+        "value": 10,
+      },
+    },
+    "parent": NullInjector {},
+    "source": null,
+  },
+  "source": null,
+}
+`;
