@@ -6,15 +6,10 @@ export interface IValueProvider {
 	multi?: boolean;
 }
 
-export interface IStaticClassProvider {
+export interface IClassProvider {
 	useClass: IConstructable<any>;
 	provide: any;
-	requires: any[];
-}
-
-export interface IConstructorProvider {
-	provide: IConstructable<any>;
-	requires: any[];
+	requires?: any[];
 }
 
 export interface IExistingProvider {
@@ -27,24 +22,4 @@ export interface IFactoryProvider {
 	provide: any;
 }
 
-export type StaticProvider =
-	| IValueProvider
-	| IExistingProvider
-	| IStaticClassProvider
-	| IConstructorProvider
-	| IFactoryProvider;
-
-export interface IConstructableProvider extends IConstructable<any> {}
-
-export interface IClassProvider {
-	useClass: IConstructable<any>;
-	provide: any;
-}
-
-export type Provider =
-	| IConstructableProvider
-	| IValueProvider
-	| IClassProvider
-	| IConstructorProvider
-	| IExistingProvider
-	| IFactoryProvider;
+export type Provider = IValueProvider | IExistingProvider | IClassProvider | IFactoryProvider;
