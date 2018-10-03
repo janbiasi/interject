@@ -4,8 +4,8 @@
 	"description": "Flawless dependency injection for any platform",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --coverage --watch",
-		"test-only": "jest --coverage",
+		"test": "jest --watch",
+		"test-only": "jest --verbose",
 		"build": "webpack",
 		"prettier": "prettier ./*.{json,js,ts} --write"
 	},
@@ -52,7 +52,12 @@
 		"transform": {
 			"^.+\\.tsx?$": "ts-jest"
 		},
+		"collectCoverage": true,
 		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+		"collectCoverageFrom": ["**/*.ts"],
+		"coveragePathIgnorePatterns": [
+			"<rootDir>/test/__snapshots__"
+		],
 		"moduleFileExtensions": [
 			"js",
 			"ts",
