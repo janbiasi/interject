@@ -56,7 +56,8 @@
 		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
 		"collectCoverageFrom": ["**/*.ts"],
 		"coveragePathIgnorePatterns": [
-			"<rootDir>/test/__snapshots__"
+			"<rootDir>/test/__snapshots__",
+			"<rootDir>/src/index.ts"
 		],
 		"moduleFileExtensions": [
 			"js",

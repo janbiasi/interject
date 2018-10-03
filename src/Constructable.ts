@@ -1,4 +1,4 @@
-export const IConstructable = Function;
+export const StaticConstructable = Function;
 
 export function isConstructable(value: any): value is IConstructable<any> {
 	return typeof value === 'function';

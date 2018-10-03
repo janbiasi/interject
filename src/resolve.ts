@@ -31,7 +31,5 @@ export const resolveToken = (
 		// do nothing, factory already built
 	}
 
-	value = value || injection.value;
-
-	return value;
+	return value || injection.value;
 };
