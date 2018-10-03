@@ -24,6 +24,9 @@ export class InjectionToken<T> {
 	}
 
 	toString() {
-		return `InjectionToken { ${this._id} }`;
+		const scope = this.injectable.scope;
+		const displayPossibleScope = scope && scope !== 'root' ? `@${scope}` : '';
+
+		return `InjectionToken${displayPossibleScope} ${this._id}`;
 	}
 }

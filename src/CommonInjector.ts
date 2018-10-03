@@ -1,11 +1,10 @@
 import { IConstructable } from './Constructable';
 import { Provider } from './Provider';
-import { THROW_IF_NOT_FOUND, CONCAT, EMPTY } from './utils';
+import { THROW_IF_NOT_FOUND, CONCAT, EMPTY, CIRCULAR } from './utils';
 import { InjectionToken } from './InjectionToken';
 import { LookupFlags, InjcetionFlags } from './Flags';
 import { IInjectable } from './Injectable';
 import { Injector } from './Injector';
-import { IInjection } from './InjectionItem';
 
 export interface IInjectorType<T> extends IConstructable<T> {
 	injector: IInjector<T>;
@@ -62,36 +61,7 @@ export abstract class CommonInjector {
 		value: undefined,
 	};
 
-	public toString() {
-		return `CommonInjector { }`
+	static toString() {
+		return `CommonInjector`;
 	}
 }
-
-export const resolve = (
-	token: any,
-	injection: IInjection | undefined,
-	injections: Map<any, IInjection>,
-	parent: CommonInjector,
-	notFoundValue: any,
-	flag: InjcetionFlags
-): any => {
-	let value: any = injection.value || undefined;
-
-	if (flag === InjcetionFlags.Skip) {
-		return parent.get(token, notFoundValue, InjcetionFlags.Default);
-	}
-
-	if (injection.useNew && !injection.value) {
-		// class was not instanciated yet, create and save the new instance
-		injection.value = value = new (injection.factory as any)(...injection.dependencies);
-	} else if (injection.useNew && injection.value) {
-		// do nothing, class already instanciated
-	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT && !injection.value) {
-		// apply deps to factory and set it to the value if not already done
-		value = injection.value = injection.factory.apply(null, injection.dependencies);
-	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT && injection.value) {
-		// do nothing, factory already built
-	}
-
-	return value;
-};

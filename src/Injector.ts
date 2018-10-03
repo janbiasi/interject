@@ -1,10 +1,11 @@
-import { CommonInjector, resolve } from './CommonInjector';
+import { CommonInjector } from './CommonInjector';
 import { Provider, IClassProvider, IExistingProvider, IFactoryProvider, IValueProvider } from './Provider';
 import { IInjection } from './InjectionItem';
 import { IDENT, EMPTY, CONCAT } from './utils';
 import { InjectionToken } from './InjectionToken';
 import { IConstructable } from './Constructable';
 import { InjcetionFlags } from './Flags';
+import { resolveToken } from './resolve';
 
 export class Injector implements CommonInjector {
 	readonly parent: CommonInjector;
@@ -65,7 +66,7 @@ export class Injector implements CommonInjector {
 	get(token: any, notFoundValue?: any, flags: InjcetionFlags = InjcetionFlags.Default): any {
 		const injection = this._injections.get(token);
 
-		return resolve(token, injection, this._injections, this.parent, notFoundValue, flags);
+		return resolveToken(token, injection, this._injections, this.parent, notFoundValue, flags);
 	}
 
 	toString() {
