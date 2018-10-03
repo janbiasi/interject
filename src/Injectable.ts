@@ -1,5 +1,5 @@
 import { IConstructable } from './Constructable';
-import { IInjectorType } from './Injector';
+import { IInjectorType } from './CommonInjector';
 
 export interface IInjectableType<T> extends IConstructable<T> {
 	injectable: IInjectable<T>;

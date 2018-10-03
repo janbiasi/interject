@@ -11,7 +11,7 @@ Injector {
       "value": [Circular],
     },
     InjectionToken {
-      "_id": "testProviderToken1",
+      "_id": "withProvidersToken",
       "injectable": Object {
         "factory": [Function],
         "scope": "root",
@@ -20,9 +20,9 @@ Injector {
       "metadataName": "InjectionToken",
     } => Object {
       "dependencies": Array [],
-      "factory": undefined,
+      "factory": [Function],
       "token": InjectionToken {
-        "_id": "testProviderToken1",
+        "_id": "withProvidersToken",
         "injectable": Object {
           "factory": [Function],
           "scope": "root",
@@ -39,7 +39,7 @@ Injector {
 }
 `;
 
-exports[`Injector different providers ClassProvider should resolve a single class from a provider 1`] = `
+exports[`Injector basics should be creatable without providers 1`] = `
 Injector {
   "_injections": Map {
     [Function] => Object {
@@ -48,107 +48,6 @@ Injector {
       "token": [Function],
       "useNew": false,
       "value": [Circular],
-    },
-    InjectionToken {
-      "_id": "testServiceToken",
-      "injectable": Object {
-        "factory": [Function],
-        "scope": "root",
-        "value": undefined,
-      },
-      "metadataName": "InjectionToken",
-    } => Object {
-      "dependencies": Array [],
-      "factory": [Function],
-      "token": InjectionToken {
-        "_id": "testServiceToken",
-        "injectable": Object {
-          "factory": [Function],
-          "scope": "root",
-          "value": undefined,
-        },
-        "metadataName": "InjectionToken",
-      },
-      "useNew": true,
-      "value": TestService {},
-    },
-  },
-  "parent": NullInjector {},
-  "source": null,
-}
-`;
-
-exports[`Injector different providers ClassProvider should resolve multiple request to the same instance 1`] = `
-Injector {
-  "_injections": Map {
-    [Function] => Object {
-      "dependencies": Array [],
-      "factory": [Function],
-      "token": [Function],
-      "useNew": false,
-      "value": [Circular],
-    },
-    InjectionToken {
-      "_id": "testServiceToken",
-      "injectable": Object {
-        "factory": [Function],
-        "scope": "root",
-        "value": undefined,
-      },
-      "metadataName": "InjectionToken",
-    } => Object {
-      "dependencies": Array [],
-      "factory": [Function],
-      "token": InjectionToken {
-        "_id": "testServiceToken",
-        "injectable": Object {
-          "factory": [Function],
-          "scope": "root",
-          "value": undefined,
-        },
-        "metadataName": "InjectionToken",
-      },
-      "useNew": true,
-      "value": TestService {},
-    },
-  },
-  "parent": NullInjector {},
-  "source": null,
-}
-`;
-
-exports[`Injector different providers ValueProvider should resolve a single value from a value provider 1`] = `
-Injector {
-  "_injections": Map {
-    [Function] => Object {
-      "dependencies": Array [],
-      "factory": [Function],
-      "token": [Function],
-      "useNew": false,
-      "value": [Circular],
-    },
-    InjectionToken {
-      "_id": "testProviderToken3",
-      "injectable": Object {
-        "factory": [Function],
-        "scope": "root",
-        "value": undefined,
-      },
-      "metadataName": "InjectionToken",
-    } => Object {
-      "dependencies": Array [],
-      "factory": undefined,
-      "token": InjectionToken {
-        "_id": "testProviderToken3",
-        "injectable": Object {
-          "factory": [Function],
-          "scope": "root",
-          "value": undefined,
-        },
-        "metadataName": "InjectionToken",
-      },
-      "useNew": false,
-      "value": 10,
     },
   },
   "parent": NullInjector {},
@@ -167,7 +66,7 @@ Injector {
       "value": [Circular],
     },
     InjectionToken {
-      "_id": "testProviderToken2",
+      "_id": "inheritProviderToken",
       "injectable": Object {
         "factory": [Function],
         "scope": "root",
@@ -176,9 +75,9 @@ Injector {
       "metadataName": "InjectionToken",
     } => Object {
       "dependencies": Array [],
-      "factory": undefined,
+      "factory": [Function],
       "token": InjectionToken {
-        "_id": "testProviderToken2",
+        "_id": "inheritProviderToken",
         "injectable": Object {
           "factory": [Function],
           "scope": "root",
@@ -200,7 +99,7 @@ Injector {
         "value": [Circular],
       },
       InjectionToken {
-        "_id": "testProviderToken2",
+        "_id": "inheritProviderToken",
         "injectable": Object {
           "factory": [Function],
           "scope": "root",
@@ -209,9 +108,9 @@ Injector {
         "metadataName": "InjectionToken",
       } => Object {
         "dependencies": Array [],
-        "factory": undefined,
+        "factory": [Function],
         "token": InjectionToken {
-          "_id": "testProviderToken2",
+          "_id": "inheritProviderToken",
           "injectable": Object {
             "factory": [Function],
             "scope": "root",
@@ -228,4 +127,384 @@ Injector {
   },
   "source": null,
 }
+`;
+
+exports[`Injector inheritance should resolve from parent 2`] = `
+"Injector { class CommonInjector {
+    static create(options, parent) {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[1]++;
+        cov_1xe72mqcsz.s[7]++;
+
+        if (Array.isArray(options)) {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][0]++;
+            cov_1xe72mqcsz.s[8]++;
+
+            return new Injector_1.Injector(options, parent);
+        } else {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][1]++;
+            cov_1xe72mqcsz.s[9]++;
+
+            return new Injector_1.Injector(options.providers, options.parent, /* istanbul ignore next */(cov_1xe72mqcsz.b[3][0]++, options.name) || /* istanbul ignore next */(cov_1xe72mqcsz.b[3][1]++, null));
+        }
+    }
+    toString() {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[2]++;
+        cov_1xe72mqcsz.s[10]++;
+
+        return \`CommonInjector { }\`;
+    }
+}, InjectionToken { inheritProviderToken } }"
+`;
+
+exports[`Injector specific providers ClassProvider should resolve a single class from a provider 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "classProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "classProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": TestService {},
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers ClassProvider should resolve a single class from a provider 2`] = `
+"Injector { class CommonInjector {
+    static create(options, parent) {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[1]++;
+        cov_1xe72mqcsz.s[7]++;
+
+        if (Array.isArray(options)) {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][0]++;
+            cov_1xe72mqcsz.s[8]++;
+
+            return new Injector_1.Injector(options, parent);
+        } else {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][1]++;
+            cov_1xe72mqcsz.s[9]++;
+
+            return new Injector_1.Injector(options.providers, options.parent, /* istanbul ignore next */(cov_1xe72mqcsz.b[3][0]++, options.name) || /* istanbul ignore next */(cov_1xe72mqcsz.b[3][1]++, null));
+        }
+    }
+    toString() {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[2]++;
+        cov_1xe72mqcsz.s[10]++;
+
+        return \`CommonInjector { }\`;
+    }
+}, InjectionToken { classProviderToken } }"
+`;
+
+exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "singletonClassProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "singletonClassProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": TestService {},
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 2`] = `
+"Injector { class CommonInjector {
+    static create(options, parent) {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[1]++;
+        cov_1xe72mqcsz.s[7]++;
+
+        if (Array.isArray(options)) {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][0]++;
+            cov_1xe72mqcsz.s[8]++;
+
+            return new Injector_1.Injector(options, parent);
+        } else {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][1]++;
+            cov_1xe72mqcsz.s[9]++;
+
+            return new Injector_1.Injector(options.providers, options.parent, /* istanbul ignore next */(cov_1xe72mqcsz.b[3][0]++, options.name) || /* istanbul ignore next */(cov_1xe72mqcsz.b[3][1]++, null));
+        }
+    }
+    toString() {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[2]++;
+        cov_1xe72mqcsz.s[10]++;
+
+        return \`CommonInjector { }\`;
+    }
+}, InjectionToken { singletonClassProviderToken } }"
+`;
+
+exports[`Injector specific providers FactoryProvider should execute the factory only once 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "multiFactoryProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "multiFactoryProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": Object {
+        "value": Array [
+          "value",
+        ],
+      },
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers FactoryProvider should resolve the factory value correctly 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "factoryProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "factoryProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": Object {
+        "value": Array [
+          "value",
+        ],
+      },
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers ValueProvider should resolve a single value from a value provider 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "valueProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "valueProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": 10,
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers ValueProvider should resolve a single value from a value provider 2`] = `
+"Injector { class CommonInjector {
+    static create(options, parent) {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[1]++;
+        cov_1xe72mqcsz.s[7]++;
+
+        if (Array.isArray(options)) {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][0]++;
+            cov_1xe72mqcsz.s[8]++;
+
+            return new Injector_1.Injector(options, parent);
+        } else {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][1]++;
+            cov_1xe72mqcsz.s[9]++;
+
+            return new Injector_1.Injector(options.providers, options.parent, /* istanbul ignore next */(cov_1xe72mqcsz.b[3][0]++, options.name) || /* istanbul ignore next */(cov_1xe72mqcsz.b[3][1]++, null));
+        }
+    }
+    toString() {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[2]++;
+        cov_1xe72mqcsz.s[10]++;
+
+        return \`CommonInjector { }\`;
+    }
+}, InjectionToken { valueProviderToken } }"
+`;
+
+exports[`Injector specific providers ValueProvider should resolve multiple values from a value provider 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "multiProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": undefined,
+      "token": InjectionToken {
+        "_id": "multiProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": Array [
+        10,
+        20,
+      ],
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
+exports[`Injector specific providers ValueProvider should resolve multiple values from a value provider 2`] = `
+"Injector { class CommonInjector {
+    static create(options, parent) {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[1]++;
+        cov_1xe72mqcsz.s[7]++;
+
+        if (Array.isArray(options)) {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][0]++;
+            cov_1xe72mqcsz.s[8]++;
+
+            return new Injector_1.Injector(options, parent);
+        } else {
+            /* istanbul ignore next */cov_1xe72mqcsz.b[2][1]++;
+            cov_1xe72mqcsz.s[9]++;
+
+            return new Injector_1.Injector(options.providers, options.parent, /* istanbul ignore next */(cov_1xe72mqcsz.b[3][0]++, options.name) || /* istanbul ignore next */(cov_1xe72mqcsz.b[3][1]++, null));
+        }
+    }
+    toString() {
+        /* istanbul ignore next */cov_1xe72mqcsz.f[2]++;
+        cov_1xe72mqcsz.s[10]++;
+
+        return \`CommonInjector { }\`;
+    }
+}, InjectionToken { multiProviderToken } }"
 `;

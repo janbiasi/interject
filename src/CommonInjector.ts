@@ -61,6 +61,10 @@ export abstract class CommonInjector {
 		scope: 'root',
 		value: undefined,
 	};
+
+	public toString() {
+		return `CommonInjector { }`
+	}
 }
 
 export const resolve = (
@@ -77,13 +81,16 @@ export const resolve = (
 		return parent.get(token, notFoundValue, InjcetionFlags.Default);
 	}
 
-	if (injection.useNew && injection.value === EMPTY) {
+	if (injection.useNew && !injection.value) {
+		// class was not instanciated yet, create and save the new instance
 		injection.value = value = new (injection.factory as any)(...injection.dependencies);
-	} else if (injection.useNew && injection.value !== EMPTY) {
+	} else if (injection.useNew && injection.value) {
 		// do nothing, class already instanciated
-	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT) {
-		// apply deps to factory and set it to the value
+	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT && !injection.value) {
+		// apply deps to factory and set it to the value if not already done
 		value = injection.value = injection.factory.apply(null, injection.dependencies);
+	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT && injection.value) {
+		// do nothing, factory already built
 	}
 
 	return value;

@@ -1,11 +1,10 @@
 import { CommonInjector, resolve } from './CommonInjector';
 import { Provider, IClassProvider, IExistingProvider, IFactoryProvider, IValueProvider } from './Provider';
-import { IInjection, IInjectionDependency } from './InjectionItem';
-import { IDENT, EMPTY, CONCAT, THROW_IF_NOT_FOUND, CIRCULAR } from './utils';
+import { IInjection } from './InjectionItem';
+import { IDENT, EMPTY, CONCAT } from './utils';
 import { InjectionToken } from './InjectionToken';
 import { IConstructable } from './Constructable';
-import { LookupFlags, InjcetionFlags } from './Flags';
-import { IInjectable } from './Injectable';
+import { InjcetionFlags } from './Flags';
 
 export class Injector implements CommonInjector {
 	readonly parent: CommonInjector;
@@ -28,17 +27,25 @@ export class Injector implements CommonInjector {
 
 		providers.forEach((provider: Provider) => {
 			const token = provider.provide;
-			let value: any = EMPTY;
+			let value: any;
 			let useNew: boolean = false;
 			let factory: Function;
 
+
 			if ((provider as IFactoryProvider).useFactory) {
-				factory = provider.provide;
+				factory = (provider as IFactoryProvider).useFactory;
 			} else if ((provider as IClassProvider).useClass) {
 				useNew = true;
 				factory = (provider as IClassProvider).useClass;
 			} else if ((provider as IValueProvider).useValue) {
-				value = (provider as IValueProvider).useValue;
+				const multiProvider = injections.get(token);
+
+				if (multiProvider && multiProvider.value) {
+					value = multiProvider.factory(multiProvider.value, (provider as IValueProvider).useValue);
+				} else {
+					value = (provider as IValueProvider).useValue;
+					factory = CONCAT;
+				}
 			} else if ((provider as IExistingProvider).useExisting) {
 				factory = IDENT;
 			}
@@ -62,11 +69,9 @@ export class Injector implements CommonInjector {
 	}
 
 	toString() {
-		const tokens = <string[]>[];
-		const records = this._injections;
+		const tokens: string[] = [];
+		this._injections.forEach((key, token) => tokens.push(token.toString()));
 
-		records.forEach((_, token) => tokens.push(`${token}`));
-
-		return `StaticInjector[${tokens.join(', ')}]`;
+		return `Injector { ${tokens.join(', ')} }`;
 	}
 }
