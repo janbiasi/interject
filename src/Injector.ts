@@ -5,7 +5,7 @@ import { IDENT, EMPTY, CONCAT } from './utils';
 import { InjectionToken } from './InjectionToken';
 import { IConstructable } from './Constructable';
 import { InjcetionFlags } from './Flags';
-import { resolveToken } from './resolve';
+import { resolveToken, resolveInjectableProvider } from './resolve';
 
 export class Injector implements CommonInjector {
 	readonly parent: CommonInjector;
@@ -26,39 +26,7 @@ export class Injector implements CommonInjector {
 			useNew: false,
 		});
 
-		providers.forEach((provider: Provider) => {
-			const token = provider.provide;
-			let value: any;
-			let useNew: boolean = false;
-			let factory: Function;
-
-
-			if ((provider as IFactoryProvider).useFactory) {
-				factory = (provider as IFactoryProvider).useFactory;
-			} else if ((provider as IClassProvider).useClass) {
-				useNew = true;
-				factory = (provider as IClassProvider).useClass;
-			} else if ((provider as IValueProvider).useValue) {
-				const multiProvider = injections.get(token);
-
-				if (multiProvider && multiProvider.value) {
-					value = multiProvider.factory(multiProvider.value, (provider as IValueProvider).useValue);
-				} else {
-					value = (provider as IValueProvider).useValue;
-					factory = CONCAT;
-				}
-			} else if ((provider as IExistingProvider).useExisting) {
-				factory = IDENT;
-			}
-
-			injections.set(token, <IInjection>{
-				token,
-				useNew,
-				factory,
-				value,
-				dependencies: [],
-			});
-		});
+		providers.forEach((provider: Provider) => resolveInjectableProvider(provider, injections));
 	}
 
 	get<T>(token: IConstructable<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjcetionFlags): T;
