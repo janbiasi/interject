@@ -14,11 +14,12 @@ describe('Injector', () => {
 
 		it('should be creatable with providers', () => {
 			const testProviderToken = new InjectionToken('withProvidersToken');
-			const testProvider = {
-				provide: testProviderToken,
-				useValue: 10,
-			};
-			const injector = new Injector([testProvider]);
+			const injector = new Injector([
+				{
+					provide: testProviderToken,
+					useValue: 10,
+				},
+			]);
 
 			expect(injector).toMatchSnapshot();
 		});
@@ -27,12 +28,13 @@ describe('Injector', () => {
 	describe('inheritance', () => {
 		it('should resolve from parent', () => {
 			const testProviderToken = new InjectionToken<number>('inheritProviderToken');
-			const testProvider = {
-				provide: testProviderToken,
-				useValue: 10,
-			};
-			const parentInjector = new Injector([testProvider]);
-			const childInjector = new Injector([testProvider], parentInjector);
+			const parentInjector = new Injector([
+				{
+					provide: testProviderToken,
+					useValue: 10,
+				},
+			]);
+			const childInjector = new Injector([], parentInjector);
 			const getServiceFromParentThruChild = childInjector.get(testProviderToken);
 
 			expect(childInjector).toMatchSnapshot();
@@ -59,15 +61,16 @@ describe('Injector', () => {
 
 			it('should resolve multiple values from a value provider', () => {
 				const testProviderToken = new InjectionToken<number>('multiProviderToken');
-				const testProvider = {
-					provide: testProviderToken,
-					useValue: 10,
-				};
-				const anotherTestProvider = {
-					provide: testProviderToken,
-					useValue: 20,
-				};
-				const injector = new Injector([testProvider, anotherTestProvider]);
+				const injector = new Injector([
+					{
+						provide: testProviderToken,
+						useValue: 10,
+					},
+					{
+						provide: testProviderToken,
+						useValue: 20,
+					},
+				]);
 
 				expect(injector).toMatchSnapshot();
 				expect(injector.toString()).toMatchSnapshot();
@@ -90,11 +93,12 @@ describe('Injector', () => {
 				}
 
 				const testServiceToken = new InjectionToken<TestService>('classProviderToken');
-				const testProvider = {
-					provide: testServiceToken,
-					useClass: TestService,
-				};
-				const injector = new Injector([testProvider]);
+				const injector = new Injector([
+					{
+						provide: testServiceToken,
+						useClass: TestService,
+					},
+				]);
 				const injectedService = injector.get(testServiceToken);
 
 				expect(injector).toMatchSnapshot();
@@ -117,11 +121,12 @@ describe('Injector', () => {
 				}
 
 				const testServiceToken = new InjectionToken<TestService>('singletonClassProviderToken');
-				const testProvider = {
-					provide: testServiceToken,
-					useClass: TestService,
-				};
-				const injector = new Injector([testProvider]);
+				const injector = new Injector([
+					{
+						provide: testServiceToken,
+						useClass: TestService,
+					},
+				]);
 				const injectedService = injector.get(testServiceToken);
 				const injectedServiceClone1 = injector.get(testServiceToken);
 				const injectedServiceClone2 = injector.get(testServiceToken);
@@ -134,27 +139,54 @@ describe('Injector', () => {
 				expect(injectedService).toMatchObject(injectedServiceClone2);
 				expect(TestService.instanceCount).toEqual(1);
 			});
+
+			it('should resolve required dependencies', () => {
+				const dependencyToken = new InjectionToken<TestService>('dependencyProviderToken');
+
+				class ValueService {
+					constructor() {}
+
+					public get value() {
+						return 100;
+					}
+				}
+
+				class TestService {
+					constructor(private valueService: ValueService) {}
+
+					public get value() {
+						return this.valueService.value;
+					}
+				}
+
+				const injector = new Injector([
+					{
+						provide: dependencyToken,
+						useClass: TestService,
+					},
+				]);
+			});
 		});
 
 		describe('FactoryProvider', () => {
 			it('should resolve the factory value correctly', () => {
-				const testFactoryToken = new InjectionToken<{value: string}>('factoryProviderToken');
+				const testFactoryToken = new InjectionToken<{ value: string }>('factoryProviderToken');
 				const testFactory = () => ({
-						value: ['value']
+					value: ['value'],
 				});
 				const testFactoryProvider = {
 					provide: testFactoryToken,
-					useFactory: testFactory
+					useFactory: testFactory,
 				};
 				const injector = new Injector([testFactoryProvider]);
 				const result = injector.get(testFactoryToken);
 
 				expect(injector).toMatchSnapshot();
 				expect(result.value).toEqual(['value']);
-			})
+			});
 
 			it('should execute the factory only once', () => {
-				const testFactoryToken = new InjectionToken<{value: string}>('multiFactoryProviderToken');
+				const testFactoryToken = new InjectionToken<{ value: string }>('multiFactoryProviderToken');
 				let factoryCreationCounter = 0;
 				const testFactory = () => {
 					factoryCreationCounter++;
@@ -162,7 +194,7 @@ describe('Injector', () => {
 				};
 				const testFactoryProvider = {
 					provide: testFactoryToken,
-					useFactory: testFactory
+					useFactory: testFactory,
 				};
 				const injector = new Injector([testFactoryProvider]);
 				const firstGet = injector.get(testFactoryToken);
@@ -174,7 +206,7 @@ describe('Injector', () => {
 				expect(secondGet.value).toEqual(['value']);
 				expect(thirdGet.value).toEqual(['value']);
 				expect(factoryCreationCounter).toEqual(1);
-			})
-		})
+			});
+		});
 	});
 });

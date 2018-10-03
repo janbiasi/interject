@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommonInjector should create a single option-ish Injector statically 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "simpleProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "simpleProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": 20,
+    },
+  },
+  "parent": NullInjector {},
+  "source": "RootInjector",
+}
+`;

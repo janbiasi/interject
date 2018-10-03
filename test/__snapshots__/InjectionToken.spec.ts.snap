@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InjectionToken should be creatable 1`] = `
+InjectionToken {
+  "_id": "creatable",
+  "injectable": Object {
+    "factory": [Function],
+    "scope": "root",
+    "value": undefined,
+  },
+  "metadataName": "InjectionToken",
+}
+`;
+
+exports[`InjectionToken should be creatable with options 1`] = `
+InjectionToken {
+  "_id": "withOptions",
+  "injectable": Object {
+    "factory": [Function],
+    "scope": "custom-scope",
+    "value": undefined,
+  },
+  "metadataName": "InjectionToken",
+}
+`;
