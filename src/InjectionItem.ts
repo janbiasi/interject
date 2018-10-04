@@ -1,4 +1,7 @@
+import { LookupFlags } from "./Flags";
+
 export interface IInjection {
+	token: any;
 	factory: Function;
 	useNew: boolean;
 	dependencies: IInjectionDependency[];
@@ -7,5 +10,5 @@ export interface IInjection {
 
 export interface IInjectionDependency {
 	token: any;
-	options: number;
+	options: LookupFlags;
 }

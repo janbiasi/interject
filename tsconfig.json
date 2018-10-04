@@ -1,6 +1,7 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
+		"allowJs": true,
 		"rootDir": "./",
 		"baseUrl": "./",
 		"sourceMap": true,
@@ -13,5 +14,5 @@
 		"lib": ["es2017"]
 	},
 	"include": ["**/*.ts"],
-	"exclude": ["node_modules", "**/*.d.ts", "**/node_modules", "**/*.spec.ts", "dist"]
+	"exclude": ["dist"]
 }

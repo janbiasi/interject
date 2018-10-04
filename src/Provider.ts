@@ -20,6 +20,7 @@ export interface IExistingProvider {
 export interface IFactoryProvider {
 	useFactory: Function;
 	provide: any;
+	requires?: any[];
 }
 
 export type Provider = IValueProvider | IExistingProvider | IClassProvider | IFactoryProvider;

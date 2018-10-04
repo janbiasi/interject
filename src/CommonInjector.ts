@@ -21,9 +21,7 @@ export interface IInjector<T> {
 	imports: (IInjectorType<any> | IInjectorTypeWithProviders<any>)[];
 }
 
-export type CommonInjectorCreateOptions =
-	| Provider[]
-	| {
+export interface ICommonInjectorCreateOptions {
 			providers: Provider[];
 			parent?: CommonInjector;
 			name?: string;
@@ -45,13 +43,8 @@ export abstract class CommonInjector {
 
 	abstract get<T>(token: IConstructable<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjcetionFlags): T;
 
-	static create(options: CommonInjectorCreateOptions): CommonInjector;
-	static create(options: CommonInjectorCreateOptions, parent?: CommonInjector): CommonInjector {
-		if (Array.isArray(options)) {
-			return new Injector(options, parent);
-		} else {
-			return new Injector(options.providers, options.parent, options.name || null);
-		}
+	static create(options: ICommonInjectorCreateOptions): CommonInjector {
+		return new Injector(options.providers, options.parent, options.name || null);
 	}
 
 	static injectable = <IInjectable<any>>{

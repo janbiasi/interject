@@ -190,6 +190,113 @@ Injector {
 
 exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 2`] = `"Injector { CommonInjector, InjectionToken singletonClassProviderToken }"`;
 
+exports[`Injector specific providers ClassProvider should resolve required dependencies 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "configToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "configToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": Object {
+        "env": "development",
+      },
+    },
+    InjectionToken {
+      "_id": "valueServiceToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [
+        InjectionToken {
+          "_id": "configToken",
+          "injectable": Object {
+            "factory": [Function],
+            "scope": "root",
+            "value": undefined,
+          },
+          "metadataName": "InjectionToken",
+        },
+      ],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "valueServiceToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": undefined,
+    },
+    InjectionToken {
+      "_id": "testServiceToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [
+        InjectionToken {
+          "_id": "valueServiceToken",
+          "injectable": Object {
+            "factory": [Function],
+            "scope": "root",
+            "value": undefined,
+          },
+          "metadataName": "InjectionToken",
+        },
+      ],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "testServiceToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": true,
+      "value": undefined,
+    },
+  },
+  "parent": NullInjector {},
+  "source": null,
+}
+`;
+
 exports[`Injector specific providers FactoryProvider should execute the factory only once 1`] = `
 Injector {
   "_injections": Map {

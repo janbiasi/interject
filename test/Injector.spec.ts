@@ -1,5 +1,7 @@
 import { Injector } from '../src/Injector';
 import { InjectionToken } from '../src/InjectionToken';
+import { CommonInjector } from '../src/CommonInjector';
+import { IClassProvider, IValueProvider } from 'src/Provider';
 
 beforeEach(() => {
 	jest.resetModules();
@@ -140,14 +142,16 @@ describe('Injector', () => {
 				expect(TestService.instanceCount).toEqual(1);
 			});
 
-			it('should resolve required dependencies', () => {
-				const dependencyToken = new InjectionToken<TestService>('dependencyProviderToken');
+			it.only('should resolve required dependencies', () => {
+				const testServiceToken = new InjectionToken<TestService>('testServiceToken');
+				const valueServiceToken = new InjectionToken<ValueService>('valueServiceToken');
+				const configToken = new InjectionToken<{env: string}>('configToken');
 
 				class ValueService {
-					constructor() {}
+					constructor(private config: {env: string}) {}
 
 					public get value() {
-						return 100;
+						return this.config.env;
 					}
 				}
 
@@ -159,12 +163,27 @@ describe('Injector', () => {
 					}
 				}
 
-				const injector = new Injector([
-					{
-						provide: dependencyToken,
-						useClass: TestService,
-					},
-				]);
+				const injector = CommonInjector.create({
+					providers: [
+						<IValueProvider>{
+							provide: configToken,
+							useValue: { env: 'development' }
+						},
+						<IClassProvider>{
+							provide: valueServiceToken,
+							useClass: ValueService,
+							requires: [configToken]
+						},
+						<IClassProvider>{
+							provide: testServiceToken,
+							useClass: TestService,
+							requires: [valueServiceToken],
+						},
+					],
+				});
+
+				expect(injector).toMatchSnapshot();
+				expect(injector.get(testServiceToken).value).toEqual('development');
 			});
 		});
 
