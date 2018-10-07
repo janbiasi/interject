@@ -141,13 +141,36 @@ Injector {
       "useNew": true,
       "value": TestService {},
     },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
+    },
   },
   "parent": NullInjector {},
   "source": null,
 }
 `;
 
-exports[`Injector specific providers ClassProvider should resolve a single class from a provider 2`] = `"Injector { CommonInjector, InjectionToken classProviderToken }"`;
+exports[`Injector specific providers ClassProvider should resolve a single class from a provider 2`] = `"Injector { CommonInjector, InjectionToken classProviderToken, InjectionToken version }"`;
 
 exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 1`] = `
 Injector {
@@ -182,13 +205,36 @@ Injector {
       "useNew": true,
       "value": TestService {},
     },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
+    },
   },
   "parent": NullInjector {},
   "source": null,
 }
 `;
 
-exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 2`] = `"Injector { CommonInjector, InjectionToken singletonClassProviderToken }"`;
+exports[`Injector specific providers ClassProvider should resolve multiple request to the same instance 2`] = `"Injector { CommonInjector, InjectionToken singletonClassProviderToken, InjectionToken version }"`;
 
 exports[`Injector specific providers ClassProvider should resolve required dependencies 1`] = `
 Injector {
@@ -291,6 +337,29 @@ Injector {
       "useNew": true,
       "value": undefined,
     },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
+    },
   },
   "parent": NullInjector {},
   "source": null,
@@ -334,6 +403,29 @@ Injector {
         ],
       },
     },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
+    },
   },
   "parent": NullInjector {},
   "source": null,
@@ -376,6 +468,29 @@ Injector {
           "value",
         ],
       },
+    },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
     },
   },
   "parent": NullInjector {},

@@ -33,6 +33,29 @@ Injector {
       "useNew": false,
       "value": 20,
     },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useNew": false,
+      "value": "0.1.0",
+    },
   },
   "parent": NullInjector {},
   "source": "RootInjector",
