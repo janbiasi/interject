@@ -6,7 +6,7 @@ import { InjectionToken } from './InjectionToken';
 import { IConstructable } from './Constructable';
 import { InjcetionFlags } from './Flags';
 import { resolveToken, resolveInjectableProvider } from './resolve';
-import VersionProvider, { VersionProviderToken } from './platform/Version';
+import { setCurrentInjector } from './runtime';
 
 export class Injector implements CommonInjector {
 	readonly parent: CommonInjector;
@@ -17,6 +17,9 @@ export class Injector implements CommonInjector {
 	constructor(providers: Provider[], parent: CommonInjector = CommonInjector.NULL, source: string | null = null) {
 		this.parent = parent;
 		this.source = source;
+
+		// enable runtime features and closure scoping
+		setCurrentInjector(this);
 
 		// storage for all injectables
 		const injections = (this._injections = new Map<any, IInjection>());
@@ -30,18 +33,12 @@ export class Injector implements CommonInjector {
 			useNew: false,
 		});
 
-		// declare version provider
-		// TODO: Outsource platform providers
-		injections.set(VersionProviderToken, <IInjection>{
-			token: VersionProviderToken,
-			factory: CIRCULAR,
-			dependencies: EMPTY,
-			value: VersionProvider.useValue,
-			useNew: false,
-		});
-
 		// process all providers
 		providers.forEach((provider: Provider) => resolveInjectableProvider(provider, injections));
+	}
+
+	set(token: InjectionToken<any> | IConstructable<any>, injection: IInjection): void {
+		this._injections.set(token, injection);
 	}
 
 	get<T>(token: InjectionToken<any> | IConstructable<any>, notFoundValue?: T, flags?: InjcetionFlags): T {

@@ -1,9 +1,5 @@
 import 'reflect-metadata';
 
-export const enum TypeDeclaration {
-	Component = 'Component',
-}
-
 export const metadataKeys = {
 	injectable: 'custom:injectable',
 	token: 'custom:token',

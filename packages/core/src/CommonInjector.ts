@@ -1,11 +1,16 @@
 import { IConstructable } from './Constructable';
 import { Provider } from './Provider';
-import { THROW_IF_NOT_FOUND, CONCAT, EMPTY, CIRCULAR } from './utils';
+import { THROW_IF_NOT_FOUND } from './utils';
 import { InjectionToken } from './InjectionToken';
-import { LookupFlags, InjcetionFlags } from './Flags';
+import { InjcetionFlags } from './Flags';
 import { IInjectable } from './Injectable';
 import { Injector } from './Injector';
+
+// runtime
 import { setCurrentInjector, getCurrentInjector } from './runtime';
+
+// core providers
+import VersionProvider from './platform/providers/Version';
 
 export interface IInjectorType<T> extends IConstructable<T> {
 	injector: IInjector<T>;
@@ -42,14 +47,12 @@ export abstract class CommonInjector {
 	static NULL: CommonInjector = new NullInjector();
 	static THROW_IF_NOT_FOUND = THROW_IF_NOT_FOUND;
 
-	constructor() {
-		// enable runtime features and closure scoping
-		setCurrentInjector(this);
-	}
-
 	abstract get<T>(token: IConstructable<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjcetionFlags): T;
 
 	static create(options: ICommonInjectorCreateOptions): CommonInjector {
+		// add core providers
+		options.providers.push(VersionProvider);
+
 		return new Injector(options.providers, options.parent, options.name || null);
 	}
 
