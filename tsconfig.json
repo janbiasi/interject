@@ -1,17 +1,8 @@
 {
-	"compileOnSave": false,
+	"extends": "./config/typescript/tsconfig.json",
 	"compilerOptions": {
-		"allowJs": true,
 		"rootDir": "./",
-		"baseUrl": "./",
-		"sourceMap": true,
-		"declaration": true,
-		"module": "es2015",
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"target": "es2015",
-		"lib": ["es2017"]
+		"baseUrl": "./"
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["dist"]
