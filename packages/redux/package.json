@@ -27,5 +27,23 @@
 	},
 	"peerDependencies": {
 		"@interject/core": ">=0.1.0"
+	},
+	"jest": {
+		"roots": ["<rootDir>", "<rootDir>/test"],
+		"transform": {
+			"^.+\\.tsx?$": "ts-jest"
+		},
+		"collectCoverage": true,
+		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+		"collectCoverageFrom": ["**/*.ts"],
+		"coveragePathIgnorePatterns": ["<rootDir>/test/__snapshots__", "<rootDir>/src/index.ts"],
+		"moduleFileExtensions": ["js", "ts", "json"],
+		"globals": {
+			"ts-jest": {
+				"diagnostics": {
+					"ignoreCodes": [151001]
+				}
+			}
+		}
 	}
 }
