@@ -1,0 +1,31 @@
+{
+	"name": "@interject/redux",
+	"version": "0.0.1",
+	"description": "Use the interject framework together with Redux",
+	"scripts": {
+		"test": "jest --watch",
+		"test-only": "jest --verbose",
+		"build": "webpack",
+		"prettier": "prettier ./*.{json,js,ts} --write"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/janbiasi/flawless-di.git"
+	},
+	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "react di"],
+	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/janbiasi/flawless-di/issues"
+	},
+	"devDependencies": {
+		"@interject/config-typescript": "0.1.0",
+		"@interject/config-webpack": "0.1.0",
+		"@interject/core": "0.1.0",
+		"jest": "23.6.0",
+		"webpack-cli": "3.1.2"
+	},
+	"peerDependencies": {
+		"@interject/core": ">=0.1.0"
+	}
+}
