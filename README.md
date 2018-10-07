@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/janbiasi/interject.svg?branch=master)](https://travis-ci.org/janbiasi/interject)
+[![Coverage Status](https://coveralls.io/repos/github/janbiasi/interject/badge.svg?branch=master)](https://coveralls.io/github/janbiasi/interject?branch=master)
+
 ## Idea and use-case
 This framework is inspired by Angular's dependency injection concept but it's far more lightweight and smaller without all the features and not exactly the same regarding the usage and concept.
 
