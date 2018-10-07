@@ -69,3 +69,6 @@ dist
 
 # macOS files
 .DS_Store
+
+# lerna files
+package.json.lerna_backup
