@@ -5,6 +5,7 @@ import { InjectionToken } from './InjectionToken';
 import { LookupFlags, InjcetionFlags } from './Flags';
 import { IInjectable } from './Injectable';
 import { Injector } from './Injector';
+import { setCurrentInjector, getCurrentInjector } from './runtime';
 
 export interface IInjectorType<T> extends IConstructable<T> {
 	injector: IInjector<T>;
@@ -22,10 +23,10 @@ export interface IInjector<T> {
 }
 
 export interface ICommonInjectorCreateOptions {
-			providers: Provider[];
-			parent?: CommonInjector;
-			name?: string;
-	  };
+	providers: Provider[];
+	parent?: CommonInjector;
+	name?: string;
+}
 
 export class NullInjector implements CommonInjector {
 	get(token: any, notFoundValue: any = THROW_IF_NOT_FOUND): any {
@@ -40,6 +41,11 @@ export class NullInjector implements CommonInjector {
 export abstract class CommonInjector {
 	static NULL: CommonInjector = new NullInjector();
 	static THROW_IF_NOT_FOUND = THROW_IF_NOT_FOUND;
+
+	constructor() {
+		// enable runtime features and closure scoping
+		setCurrentInjector(this);
+	}
 
 	abstract get<T>(token: IConstructable<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjcetionFlags): T;
 
@@ -56,5 +62,9 @@ export abstract class CommonInjector {
 
 	static toString() {
 		return `CommonInjector`;
+	}
+
+	static get currentInjector(): CommonInjector {
+		return getCurrentInjector();
 	}
 }

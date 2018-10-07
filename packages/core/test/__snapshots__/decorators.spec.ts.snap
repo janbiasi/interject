@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`decorators should return an inject providers correctly 1`] = `
+AppModule {
+  "_testService": TestService {},
+  "_value": 20,
+}
+`;

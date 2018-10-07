@@ -5,6 +5,7 @@ import { ProviderScope } from './Scope';
 import { IInjectableType, IInjectable } from './Injectable';
 import { defineMetadata, metadataKeys, getMetadata } from './meta';
 import { Injector, CommonInjector } from '.';
+import { stringify } from './utils';
 
 export interface IInjectableOptions {
 	scope?: ProviderScope;
@@ -18,10 +19,11 @@ const INJECTABLE_DEFAULT_OPTS = {
 
 export function Injectable({ scope, requires }: IInjectableOptions = INJECTABLE_DEFAULT_OPTS) {
 	return <T extends { new (...args: any[]): any }>(Factory: T) => {
-		const token = new InjectionToken<T>(Factory.name);
+		const token = new InjectionToken<T>(Factory.name || stringify(Factory));
 		const injectable = <IInjectable<T>>{
 			scope,
 			requires,
+			useNew: true,
 			factory: Factory as any,
 			value: undefined,
 		};
@@ -32,7 +34,7 @@ export function Injectable({ scope, requires }: IInjectableOptions = INJECTABLE_
 }
 
 export interface IModuleOptions {
-	providers?: Array<IConstructable<any>|Provider>;
+	providers?: Array<IConstructable<any> | Provider>;
 }
 
 const MODULE_DEFAULT_OPTS = {
@@ -46,18 +48,28 @@ export function Module({ providers }: IModuleOptions = MODULE_DEFAULT_OPTS) {
 				if (typeof provider === 'function') {
 					return {
 						provide: getMetadata(metadataKeys.token, provider),
-						useClass: getMetadata(metadataKeys.provider, provider),
+						useClass: provider,
 					};
 				}
 
 				return provider as Provider;
 			}
 		);
-        
-        console.log('create injector');
-        const injector = new Injector(processedProviders, CommonInjector.NULL, Factory.name);
-        console.log(injector)
+
+		// create module root injector without parent
+		// TODO: let module inherit from other module for correct resolving of inherited deps
+		const injector = CommonInjector.create({
+			providers: processedProviders,
+			parent: CommonInjector.NULL,
+			name: Factory.name,
+		});
 
 		defineMetadata(metadataKeys.injector, injector, Factory);
+		defineMetadata(
+			metadataKeys.bootstrap,
+			// the tokens in correct order for bootstrap of the module
+			processedProviders.map((provider: Provider) => provider.provide),
+			Factory
+		);
 	};
 }

@@ -1,0 +1,34 @@
+{
+	"name": "@interject/core",
+	"version": "0.1.0",
+	"description": "Main core of the interject framework - dependency injection without all the pain",
+	"scripts": {
+		"test": "jest --watch",
+		"test-only": "jest --verbose",
+		"build": "webpack --config webpack.config.js",
+		"prettier": "prettier ./*.{json,js,ts} --write"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/janbiasi/flawless-di.git"
+	},
+	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "vue"],
+	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/janbiasi/flawless-di/issues"
+	},
+	"devDependencies": {
+		"@interject/config-typescript": "0.1.0",
+		"@interject/config-webpack": "0.1.0",
+		"@types/jest": "23.3.2",
+		"@types/node": "10.11.0",
+		"lerna": "^2.11.0",
+		"reflect-metadata": "0.1.12",
+		"ts-jest": "23.10.1",
+		"tslint": "5.11.0",
+		"typescript": "3.0.3",
+		"webpack-cli": "3.1.2",
+		"jest": "23.6.0"
+	}
+}

@@ -1,7 +1,7 @@
 import { Injector } from '../src/Injector';
 import { InjectionToken } from '../src/InjectionToken';
 import { CommonInjector } from '../src/CommonInjector';
-import { IClassProvider, IValueProvider } from 'src/Provider';
+import { IClassProvider, IValueProvider } from '../src/Provider';
 
 beforeEach(() => {
 	jest.resetModules();
@@ -95,12 +95,14 @@ describe('Injector', () => {
 				}
 
 				const testServiceToken = new InjectionToken<TestService>('classProviderToken');
-				const injector = new Injector([
-					{
-						provide: testServiceToken,
-						useClass: TestService,
-					},
-				]);
+				const injector = CommonInjector.create({
+					providers: [
+						{
+							provide: testServiceToken,
+							useClass: TestService,
+						},
+					],
+				});
 				const injectedService = injector.get(testServiceToken);
 
 				expect(injector).toMatchSnapshot();
@@ -123,12 +125,14 @@ describe('Injector', () => {
 				}
 
 				const testServiceToken = new InjectionToken<TestService>('singletonClassProviderToken');
-				const injector = new Injector([
-					{
-						provide: testServiceToken,
-						useClass: TestService,
-					},
-				]);
+				const injector = CommonInjector.create({
+					providers: [
+						{
+							provide: testServiceToken,
+							useClass: TestService,
+						},
+					],
+				});
 				const injectedService = injector.get(testServiceToken);
 				const injectedServiceClone1 = injector.get(testServiceToken);
 				const injectedServiceClone2 = injector.get(testServiceToken);
@@ -142,13 +146,13 @@ describe('Injector', () => {
 				expect(TestService.instanceCount).toEqual(1);
 			});
 
-			it.only('should resolve required dependencies', () => {
+			it('should resolve required dependencies', () => {
 				const testServiceToken = new InjectionToken<TestService>('testServiceToken');
 				const valueServiceToken = new InjectionToken<ValueService>('valueServiceToken');
-				const configToken = new InjectionToken<{env: string}>('configToken');
+				const configToken = new InjectionToken<{ env: string }>('configToken');
 
 				class ValueService {
-					constructor(private config: {env: string}) {}
+					constructor(private config: { env: string }) {}
 
 					public get value() {
 						return this.config.env;
@@ -167,14 +171,16 @@ describe('Injector', () => {
 					providers: [
 						<IValueProvider>{
 							provide: configToken,
-							useValue: { env: 'development' }
+							useValue: { env: 'development' },
 						},
 						<IClassProvider>{
+							/* requires Config */
 							provide: valueServiceToken,
 							useClass: ValueService,
-							requires: [configToken]
+							requires: [configToken],
 						},
 						<IClassProvider>{
+							/* requires ValueService */
 							provide: testServiceToken,
 							useClass: TestService,
 							requires: [valueServiceToken],
@@ -197,7 +203,7 @@ describe('Injector', () => {
 					provide: testFactoryToken,
 					useFactory: testFactory,
 				};
-				const injector = new Injector([testFactoryProvider]);
+				const injector = CommonInjector.create({ providers: [testFactoryProvider] });
 				const result = injector.get(testFactoryToken);
 
 				expect(injector).toMatchSnapshot();
@@ -215,7 +221,9 @@ describe('Injector', () => {
 					provide: testFactoryToken,
 					useFactory: testFactory,
 				};
-				const injector = new Injector([testFactoryProvider]);
+				const injector = CommonInjector.create({
+					providers: [testFactoryProvider],
+				});
 				const firstGet = injector.get(testFactoryToken);
 				const secondGet = injector.get(testFactoryToken);
 				const thirdGet = injector.get(testFactoryToken);

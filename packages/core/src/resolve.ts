@@ -1,10 +1,9 @@
-import { IInjection, IInjectionDependency } from './InjectionItem';
 import { CommonInjector } from './CommonInjector';
 import { InjcetionFlags, LookupFlags } from './Flags';
-import { CONCAT, IDENT, THROW_IF_NOT_FOUND } from './utils';
+import { IInjection, IInjectionDependency } from './InjectionItem';
+import { CONCAT, IDENT, THROW_IF_NOT_FOUND, stringify } from './utils';
 import { Provider, IFactoryProvider, IClassProvider, IValueProvider, IExistingProvider } from './Provider';
-import { InjectionToken } from '.';
-import { stringify } from './utils';
+import { IConstructable } from './Constructable';
 
 export const resolveToken = (
 	token: any,
@@ -24,8 +23,7 @@ export const resolveToken = (
 	if (injection.useNew && !injection.value) {
 		// class was not instanciated yet, create and save the new instance
 		const childDependencies = resolveTokenDependencies(injection, injections, parent);
-		console.log('found deps of %s resolved to', token, childDependencies)
-		value = injection.value = new (injection.factory as any)(...childDependencies);
+		value = injection.value = new (injection.factory as IConstructable<any>)(...childDependencies);
 	} else if (injection.useNew && injection.value) {
 		// do nothing, class already instanciated
 	} else if (typeof injection.factory === 'function' && injection.factory !== CONCAT && !injection.value) {
@@ -47,23 +45,28 @@ export const resolveInjectableProvider = (provider: Provider, injections: Map<an
 	let dependencies: IInjectionDependency[] = [];
 
 	if ((provider as IFactoryProvider).useFactory) {
-		dependencies = (provider as IFactoryProvider).requires || [];
+		// provided a factory, read dependencies and set factory
+		dependencies = (provider as IFactoryProvider).requires || [];
 		factory = (provider as IFactoryProvider).useFactory;
 	} else if ((provider as IClassProvider).useClass) {
+		// provided a class as provider, set deps and factory configuration
 		useNew = true;
-		console.log((provider as IClassProvider).requires)
-		dependencies = (provider as IClassProvider).requires || [];
+		dependencies = (provider as IClassProvider).requires || [];
 		factory = (provider as IClassProvider).useClass;
 	} else if ((provider as IValueProvider).useValue) {
+		// provided a simple value provider, first read existing values if we have multiple
 		const multiProvider = injections.get(token);
 
 		if (multiProvider && multiProvider.value) {
+			// if we already have a value, use the factory CONCAT to concatenate with the existing values
 			value = multiProvider.factory(multiProvider.value, (provider as IValueProvider).useValue);
 		} else {
+			// if we don't have a value set the current value as value and set the factory to concat method
 			value = (provider as IValueProvider).useValue;
 			factory = CONCAT;
 		}
 	} else if ((provider as IExistingProvider).useExisting) {
+		// if we should use an exisiting one we'll use the IDENT method (simple i/o)
 		factory = IDENT;
 	}
 
@@ -88,32 +91,32 @@ export const resolveTokenDependencies = (
 	if (injection.dependencies.length > 0) {
 		for (let index = 0; index < injection.dependencies.length; index++) {
 			let dependency: IInjection | undefined;
-			const token = injection.dependencies[index];
-			console.log('tryResolveDepsOf %s', token, injection.dependencies[index])
+			const injectionDependency = injection.dependencies[index];
 
 			if (!!~[LookupFlags.Self, LookupFlags.Default].indexOf(options)) {
 				// must resolve self (which is default)
-				dependency = injections.get(token);
+				dependency = injections.get(injectionDependency);
 			}
 
 			if (options === LookupFlags.Parent) {
 				// lookup parent
-				// dependency = parent.get(token, notFoundValue);
+				dependency = parent.get(injectionDependency.token, notFoundValue);
 			}
 
 			if (!dependency && options !== LookupFlags.Optional && notFoundValue === THROW_IF_NOT_FOUND) {
 				// throw error if not found and no default value was set
-				throw new Error(`Could not resolve required dependency '${stringify(token)}'`);
+				throw new Error(`Could not resolve required dependency '${stringify(injectionDependency)}'`);
 			}
 
-			if (dependency.dependencies && dependency.dependencies.length > 0) {
-				console.log('foundChildDepsOf %s', token, dependency)
-				dependency.dependencies = resolveTokenDependencies(dependency, injections, parent, notFoundValue);
-			}
-
-			const resolvedDependency = resolveToken(dependency.token, dependency, injections, parent, notFoundValue, InjcetionFlags.Default);
+			const resolvedDependency = resolveToken(
+				dependency.token,
+				dependency,
+				injections,
+				parent,
+				notFoundValue,
+				InjcetionFlags.Default
+			);
 			resolvedDependencies.push(resolvedDependency);
-			console.log('computedDeps of %s', token, resolvedDependencies.length, resolvedDependencies);
 		}
 	}
 

@@ -5,10 +5,11 @@ export const enum TypeDeclaration {
 }
 
 export const metadataKeys = {
-    injectable: 'custom:injectable',
-    token: 'custom:token',
+	injectable: 'custom:injectable',
+	token: 'custom:token',
 	provider: 'custom:provider',
-	injector: 'custom:injector'
+	injector: 'custom:injector',
+	bootstrap: 'custom:bootstrap',
 };
 
 export function getMetadata<T extends any>(metadataKey: any, target: any): T {
