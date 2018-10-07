@@ -1,0 +1,3 @@
+{
+	"extends": "./node_modules/@interject/config-typescript/tsconfig.json"
+}
