@@ -1,14 +1,14 @@
 ## Idea and use-case
 This framework is inspired by Angular's dependency injection concept but it's far more lightweight and smaller without all the features and not exactly the same regarding the usage and concept.
 
-## Core principals
+## Core principals
 tbd.
 
 ### Definining injectables
 
 Each injectable is defined with a key. The key is not only a string, it's rather a token. Inside the interject framework they're called `InjectionToken`. The key can also be any type of constructable class (not object!). Dependencies defined by a token are registered inside an Injector which then can be provided by a method called `get`. The dependency will automatically be instanciated/called/exposed by the injector and provided to your module.
 
-## Providers
+## Providers
 
 * [ClassProvider](#class-provider)
 * [ValueProvider](#value-provider)
@@ -24,7 +24,7 @@ tbd.
 ### FactoryProvider
 tbd.
 
-### ExistingProvider
+### ExistingProvider
 tbd.
 
 # FAQs
