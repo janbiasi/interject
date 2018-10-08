@@ -2,12 +2,6 @@
 	"name": "@interject/vuex",
 	"version": "0.0.1",
 	"description": "Use the interject framework together with Vue + Vuex",
-	"scripts": {
-		"test": "jest --watch",
-		"test-only": "jest --verbose",
-		"build": "webpack",
-		"prettier": "prettier ./*.{json,js,ts} --write"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/janbiasi/flawless-di.git"
@@ -19,10 +13,11 @@
 		"url": "https://github.com/janbiasi/flawless-di/issues"
 	},
 	"devDependencies": {
-		"@interject/config-typescript": "0.1.0",
-		"@interject/config-webpack": "0.1.0",
-		"@interject/core": "0.1.0",
+		"@interject/core": ">=0.1.0",
+		"@types/jest": "23.3.3",
+		"ts-jest": "23.10.4",
 		"jest": "23.6.0",
+		"typescript": "3.1.1",
 		"webpack-cli": "3.1.2"
 	},
 	"peerDependencies": {

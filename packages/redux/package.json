@@ -5,8 +5,7 @@
 	"scripts": {
 		"test": "jest --watch",
 		"test-only": "jest --verbose",
-		"build": "webpack",
-		"prettier": "prettier ./*.{json,js,ts} --write"
+		"build": "webpack"
 	},
 	"repository": {
 		"type": "git",
@@ -22,8 +21,11 @@
 		"@interject/config-typescript": "0.1.0",
 		"@interject/config-webpack": "0.1.0",
 		"@interject/core": "0.1.0",
+		"@types/jest": "23.3.3",
+		"ts-jest": "23.10.4",
 		"jest": "23.6.0",
-		"webpack-cli": "3.1.2"
+		"webpack-cli": "3.1.2",
+		"typescript": "3.1.1"
 	},
 	"peerDependencies": {
 		"@interject/core": ">=0.1.0"
