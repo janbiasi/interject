@@ -13,7 +13,6 @@
 		"audit": "npm audit",
 		"postinstall": "run-s bootstrap",
 		"bootstrap": "lerna bootstrap",
-		"postbootstrap": "run-s audit",
 		"test": "lerna run test",
 		"test-watch": "lerna run test-watch",
 		"build": "lerna run build",
