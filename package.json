@@ -6,16 +6,16 @@
 	"main": "index.js",
 	"scripts": {
 		"cz": "git-cz",
-		"clean": "run-s clean-*",
-		"clean-lerna": "lerna clean",
-		"clean-locks": "rimraf ./**/package-lock.json",
+		"clean": "./node_modules/.bin/run-s clean-*",
+		"clean-lerna": "./node_modules/.bin/lerna clean",
+		"clean-locks": "./node_modules/.bin/rimraf ./**/package-lock.json",
 		"audit": "npm audit",
-		"postinstall": "run-s bootstrap audit",
-		"bootstrap": "lerna bootstrap --hoist",
-		"test": "lerna run test",
-		"test-only": "lerna run test-only",
-		"build": "lerna run build",
-		"prettier": "prettier ./**/*.{json,js,ts} --write"
+		"postinstall": "./node_modules/.bin/run-s bootstrap audit",
+		"bootstrap": "./node_modules/.bin/lerna bootstrap --hoist",
+		"test": "./node_modules/.bin/lerna run test",
+		"test-only": "./node_modules/.bin/lerna run test-only",
+		"build": "./node_modules/.bin/lerna run build",
+		"prettier": "./node_modules/.bin/prettier ./**/*.{json,js,ts} --write"
 	},
 	"repository": {
 		"type": "git",
@@ -25,16 +25,7 @@
 		"npm": ">=6",
 		"node": ">=8"
 	},
-	"keywords": [
-		"di",
-		"dependency",
-		"injection",
-		"dependency",
-		"injection",
-		"inject",
-		"react",
-		"vue"
-	],
+	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "vue"],
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {
