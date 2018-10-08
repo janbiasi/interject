@@ -3,6 +3,6 @@ const createWebpackConfig = require('@interject/config-webpack');
 
 module.exports = createWebpackConfig({
 	path: __dirname,
-	name: 'interject-gondel',
-	library: 'InterjectGondelPlugin'
+	name: 'interject-react',
+	library: 'InterjectReactPlugin'
 });

@@ -1,7 +1,8 @@
 // @ts-check
-const { createWebpackConfig } = require('@interject/config-webpack/webpack.config');
+const createWebpackConfig = require('@interject/config-webpack');
 
 module.exports = createWebpackConfig({
-	mode: 'development',
 	path: __dirname,
+	name: 'interject',
+	library: 'Interject'
 });

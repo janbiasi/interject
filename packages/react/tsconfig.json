@@ -1,0 +1,10 @@
+{
+	"extends": "./node_modules/@interject/config-typescript/tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./",
+		"baseUrl": "./",
+		"declaration": true
+	},
+	"include": ["**/*.ts"],
+	"exclude": ["dist"]
+}

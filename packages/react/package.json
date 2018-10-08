@@ -1,8 +1,8 @@
 {
-	"name": "@interject/gondel",
+	"name": "@interject/react",
 	"version": "0.0.1",
-	"description": "Use the interject framework together with Gondel",
-	"main": "./dist/interject-gondel.js",
+	"description": "Use the interject framework together with React",
+	"main": "./dist/interject-react.js",
 	"types": "./dist/meta/src/index.d.ts",
 	"scripts": {
 		"test-watch": "jest --watch",
@@ -15,42 +15,64 @@
 		"type": "git",
 		"url": "git+https://github.com/janbiasi/flawless-di.git"
 	},
-	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "gondel", "gondel di"],
+	"keywords": [
+		"di",
+		"dependency",
+		"injection",
+		"dependency",
+		"injection",
+		"inject",
+		"react",
+		"react di"
+	],
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/janbiasi/flawless-di/issues"
 	},
 	"devDependencies": {
-		"@interject/config-typescript": "0.1.0",
-		"@interject/config-webpack": "0.1.0",
-		"@interject/core": "0.1.0",
 		"@types/jest": "23.3.3",
-		"ts-jest": "23.10.4",
+		"@types/react": "^16.4.0",
 		"jest": "23.6.0",
-		"prettier": "1.14.3",
-		"webpack": "4.20.2",
-		"webpack-cli": "3.1.2",
+		"npm-run-all": "4.1.3",
+		"react": "^16.4.0",
+		"ts-jest": "23.10.4",
 		"typescript": "3.1.1",
-		"npm-run-all": "4.1.3"
+		"webpack": "4.20.2",
+		"webpack-cli": "3.1.2"
 	},
 	"peerDependencies": {
-		"@interject/core": ">=0.1.0"
+		"@interject/core": ">=0.1.0",
+		"react": ">=16.0.0<17.0.0"
 	},
 	"jest": {
-		"roots": ["<rootDir>", "<rootDir>/test"],
+		"roots": [
+			"<rootDir>",
+			"<rootDir>/test"
+		],
 		"transform": {
 			"^.+\\.tsx?$": "ts-jest"
 		},
 		"collectCoverage": true,
 		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-		"collectCoverageFrom": ["**/*.ts"],
-		"coveragePathIgnorePatterns": ["<rootDir>/test/__snapshots__", "<rootDir>/src/index.ts"],
-		"moduleFileExtensions": ["js", "ts", "json"],
+		"collectCoverageFrom": [
+			"**/*.ts"
+		],
+		"coveragePathIgnorePatterns": [
+			"<rootDir>/test/__snapshots__",
+			"<rootDir>/src/index.ts"
+		],
+		"moduleFileExtensions": [
+			"js",
+			"ts",
+			"json"
+		],
 		"globals": {
 			"ts-jest": {
 				"diagnostics": {
-					"ignoreCodes": [151001]
+					"ignoreCodes": [
+						151001
+					]
 				}
 			}
 		}

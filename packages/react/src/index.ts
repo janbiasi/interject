@@ -1,0 +1,1 @@
+export const __INTERJECT_HOC__ = '__INTERJECT_HOC__';

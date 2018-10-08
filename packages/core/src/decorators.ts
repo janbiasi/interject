@@ -35,41 +35,55 @@ export function Injectable({ scope, requires }: IInjectableOptions = INJECTABLE_
 
 export interface IModuleOptions {
 	providers?: Array<IConstructable<any> | Provider>;
+	parent?: CommonInjector
 }
 
 const MODULE_DEFAULT_OPTS = {
 	providers: [],
 };
 
-export function Module({ providers }: IModuleOptions = MODULE_DEFAULT_OPTS) {
-	return <T extends { new (...args: any[]): any }>(Factory: T) => {
-		const processedProviders: Provider[] = providers.map(
-			(provider: any): Provider => {
-				if (typeof provider === 'function') {
-					return {
-						provide: getMetadata(metadataKeys.token, provider),
-						useClass: provider,
-					};
-				}
-
-				return provider as Provider;
+/** @internal */
+export function internalModuleDecoratorFactory<T extends IConstructable<any>>(
+	{ providers, parent }: IModuleOptions,
+	Factory: T
+): CommonInjector {
+	const processedProviders: Provider[] = providers.map(
+		(provider: any): Provider => {
+			if (typeof provider === 'function') {
+				return {
+					provide: getMetadata(metadataKeys.token, provider),
+					useClass: provider,
+				};
 			}
-		);
 
-		// create module root injector without parent
-		// TODO: let module inherit from other module for correct resolving of inherited deps
-		const injector = CommonInjector.create({
-			providers: processedProviders,
-			parent: CommonInjector.NULL,
-			name: Factory.name,
-		});
+			return provider as Provider;
+		}
+	);
 
-		defineMetadata(metadataKeys.injector, injector, Factory);
-		defineMetadata(
-			metadataKeys.bootstrap,
-			// the tokens in correct order for bootstrap of the module
-			processedProviders.map((provider: Provider) => provider.provide),
-			Factory
-		);
+	// create module root injector without parent
+	// TODO: let module inherit from other module for correct resolving of inherited deps
+	const injector = CommonInjector.create({
+		providers: processedProviders,
+		parent: parent || CommonInjector.NULL,
+		name: Factory.name,
+	});
+
+	defineMetadata(metadataKeys.injector, injector, Factory);
+	defineMetadata(
+		metadataKeys.bootstrap,
+		// the tokens in correct order for bootstrap of the module
+		processedProviders.map((provider: Provider) => provider.provide),
+		Factory
+	);
+
+	return injector;
+}
+
+export function Module({ providers, parent }: IModuleOptions = MODULE_DEFAULT_OPTS) {
+	return <T extends { new (...args: any[]): any }>(Factory: T) => {
+		internalModuleDecoratorFactory({
+			providers,
+			parent
+		}, Factory);
 	};
 }
