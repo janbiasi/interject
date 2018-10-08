@@ -8,7 +8,7 @@
 		"cz": "git-cz",
 		"clean": "run-s clean-*",
 		"clean-lerna": "lerna clean",
-		"clean-locks": "rimraf ./**/package.json",
+		"clean-locks": "rimraf ./**/package-lock.json",
 		"audit": "npm audit",
 		"postinstall": "run-s bootstrap audit",
 		"bootstrap": "lerna bootstrap --hoist",
@@ -25,7 +25,16 @@
 		"npm": ">=6",
 		"node": ">=8"
 	},
-	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "vue"],
+	"keywords": [
+		"di",
+		"dependency",
+		"injection",
+		"dependency",
+		"injection",
+		"inject",
+		"react",
+		"vue"
+	],
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {
