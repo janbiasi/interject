@@ -13,7 +13,7 @@
 		"postinstall": "run-s bootstrap audit",
 		"bootstrap": "lerna bootstrap --hoist",
 		"test": "lerna run test",
-		"test-only": "lerna run test-only",
+		"test-watch": "lerna run test-watch",
 		"build": "lerna run build",
 		"prettier": "prettier ./**/*.{json,js,ts} --write"
 	},

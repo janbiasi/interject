@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"description": "Main core of the interject framework - dependency injection without all the pain",
 	"scripts": {
-		"test": "jest --watch",
-		"test-only": "jest --verbose",
+		"test-watch": "jest --watch",
+		"test": "jest --verbose",
 		"build": "webpack --config webpack.config.js",
 		"prettier": "prettier ./*.{json,js,ts} --write"
 	},

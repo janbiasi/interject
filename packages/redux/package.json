@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"description": "Use the interject framework together with Redux",
 	"scripts": {
-		"test": "jest --watch",
-		"test-only": "jest --verbose",
+		"test-watch": "jest --watch",
+		"test": "jest --verbose",
 		"build": "webpack"
 	},
 	"repository": {
