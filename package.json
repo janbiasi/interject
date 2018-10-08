@@ -11,7 +11,7 @@
 		"clean-locks": "rimraf ./**/package-lock.json",
 		"audit": "npm audit",
 		"postinstall": "run-s bootstrap audit",
-		"bootstrap": "lerna bootstrap --hoist",
+		"bootstrap": "lerna bootstrap",
 		"test": "lerna run test",
 		"test-watch": "lerna run test-watch",
 		"build": "lerna run build",
