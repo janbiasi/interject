@@ -31,6 +31,9 @@
 		"url": "https://github.com/janbiasi/flawless-di/issues"
 	},
 	"devDependencies": {
+		"@interject/config-typescript": "*",
+		"@interject/config-webpack": "*",
+		"@interject/core": "*",
 		"@types/jest": "23.3.3",
 		"@types/react": "^16.4.0",
 		"jest": "23.6.0",

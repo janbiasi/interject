@@ -2,11 +2,5 @@
 	"extends": "../typescript/tsconfig.json",
 	"compilerOptions": {
 		"declaration": true
-	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"dist"
-	]
+	}
 }
