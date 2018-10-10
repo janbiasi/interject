@@ -344,9 +344,7 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "function",
     "props": Object {
-      "MyModule": MyModule {
-        "provideAs": "MyModule",
-      },
+      "[object Object]": MyModule {},
     },
     "ref": null,
     "rendered": null,
@@ -358,9 +356,7 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "function",
       "props": Object {
-        "MyModule": MyModule {
-          "provideAs": "MyModule",
-        },
+        "[object Object]": MyModule {},
       },
       "ref": null,
       "rendered": null,

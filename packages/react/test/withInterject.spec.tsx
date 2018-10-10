@@ -2,7 +2,6 @@ import * as React from 'react';
 import { shallow, render } from 'enzyme';
 import { Module, InjectionToken } from '@interject/core';
 import { withInterject } from '../src/withInterject';
-import { InterjectReactModule } from '../src/InterjectReactModule';
 
 const TEST_TOKEN = new InjectionToken<string>('a test token');
 
@@ -17,8 +16,8 @@ describe('withInterject', () => {
 
 	it('should inject an empty module into a react component', () => {
 		@Module()
-		class MyModule implements InterjectReactModule {
-			public provideAs = 'MyModule';
+		class MyModule {
+			public static provideAs = 'MyModule';
 		}
 
 		const Component = () => <p>MyComponent</p>;
@@ -32,7 +31,7 @@ describe('withInterject', () => {
 		@Module({
 			providers: [{ provide: TEST_TOKEN, useValue: 'test' }]
 		})
-		class MyModule implements InterjectReactModule {
+		class MyModule {
 			public provideAs = 'MyModule';
 			public value: string;
 
@@ -54,7 +53,7 @@ describe('withInterject', () => {
 		@Module({
 			providers: [{ provide: TEST_TOKEN, useValue: 'test' }]
 		})
-		class MyModule implements InterjectReactModule {
+		class MyModule {
 			static creationCount: number = 0;
 			public provideAs = 'MyModule';
 			public value: string;

@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import * as React from 'react';
 import { Subtract } from './Subtract';
 import { internalBootstrapFactory } from '@interject/core';
