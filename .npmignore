@@ -1,6 +1,7 @@
 .vscode
 test
 src
-./.*
-./*.json
-./*.js
+coverage
+packages/*/.*
+packages/*/./*.json
+packages/**/*.ts
