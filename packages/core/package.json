@@ -2,7 +2,7 @@
 	"name": "@interject/core",
 	"version": "0.1.0",
 	"description": "Main core of the interject framework - dependency injection without all the pain",
-	"main": "./dist/interject.js",
+	"main": "./dist/interject.min.js",
 	"types": "./dist/meta/src/index.d.ts",
 	"scripts": {
 		"test-watch": "jest --watch",

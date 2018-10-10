@@ -29,7 +29,7 @@ describe('decorators', () => {
 				return this._value;
 			}
 		}
-		const moduleInstance = bootstrap<AppModule>(AppModule);
+		const moduleInstance = bootstrap(AppModule);
 
 		expect(moduleInstance).toMatchSnapshot();
 		expect(moduleInstance.testService.value).toEqual(10);
