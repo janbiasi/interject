@@ -21,7 +21,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/janbiasi/flawless-di.git"
+		"url": "git+https://github.com/janbiasi/interject.git"
 	},
 	"engines": {
 		"npm": ">=6",
@@ -40,9 +40,9 @@
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/janbiasi/flawless-di/issues"
+		"url": "https://github.com/janbiasi/interject/issues"
 	},
-	"homepage": "https://github.com/janbiasi/flawless-di#readme",
+	"homepage": "https://github.com/janbiasi/interject#readme",
 	"devDependencies": {
 		"@types/jest": "23.3.3",
 		"@types/node": "10.11.4",
