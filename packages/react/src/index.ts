@@ -1,1 +1,2 @@
-export const __INTERJECT_HOC__ = '__INTERJECT_HOC__';
+export { withInterject } from './withInterject';
+export { ReactProvidableModule } from './utils';

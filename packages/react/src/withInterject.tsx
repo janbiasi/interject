@@ -1,21 +1,56 @@
+import 'reflect-metadata';
 import * as React from 'react';
 import { Subtract } from './Subtract';
+import { internalBootstrapFactory } from '@interject/core';
+import { getAnchorProp } from './utils';
 
-type InterjectModule = { new (...args: any[]): any };
+export type InterjectModule<T extends any> = { new (...args: any[]): T };
 
-interface IWithInterjectProps {
-    modules: any | any[];
+export interface IWithInterjectProps {
+    [moduleProvideToken: string]: any;
 }
 
-interface IWithInterjectState {}
+export interface IWithInterjectState {}
 
-// TODO: provide easy API for React HoC's
-export function withInterject<P extends IWithInterjectProps, M extends InterjectModule>(Component: React.ComponentType<P>, modules: InterjectModule | InterjectModule[]) {
+export interface IInterjectComponentPersistance {
+    providers: any[];
+}
+
+/** @internal */
+const modulePersistanceMap: Map<InterjectModule<any>, IInterjectComponentPersistance> = new Map();
+
+export function withInterject<T extends InterjectModule<any>, P extends IWithInterjectProps>(Component: React.ComponentType<P>, ModuleFactory?: T) {
     return class InterjectionComponent extends React.Component<Subtract<P, IWithInterjectProps>, IWithInterjectState> {
         state: IWithInterjectState = {};
 
+        aggreagateModuleInstance(ModuleFactory?: InterjectModule<any>) {
+            if (!ModuleFactory) {
+                return null;
+            }
+
+            const cached = modulePersistanceMap.get(ModuleFactory);
+            if (cached) {
+                return cached;
+            }
+
+            const bootstrappedModule = internalBootstrapFactory(ModuleFactory);
+            modulePersistanceMap.set(ModuleFactory, bootstrappedModule);
+            return bootstrappedModule;
+        }
+
         render() {
-            return <Component {...this.props} modules={modules} />;
+            if (!ModuleFactory) {
+                return <Component {...this.props}/>;
+            }
+
+            const inst = this.aggreagateModuleInstance(ModuleFactory);
+            const key = getAnchorProp(inst);
+            const injectedModuleProps = {
+                [key]: inst
+            };
+            
+            return <Component {...this.props} {...injectedModuleProps} />;
+            
         }
     }
 }
