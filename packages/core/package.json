@@ -45,7 +45,7 @@
 		"collectCoverage": true,
 		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
 		"collectCoverageFrom": ["**/*.ts"],
-		"coveragePathIgnorePatterns": ["<rootDir>/test/__snapshots__", "<rootDir>/src/index.ts"],
+		"coveragePathIgnorePatterns": ["<rootDir>/test/__snapshots__", "<rootDir>/src/index.ts", "<rootDir>/dist/meta"],
 		"moduleFileExtensions": ["js", "ts", "json"],
 		"globals": {
 			"ts-jest": {

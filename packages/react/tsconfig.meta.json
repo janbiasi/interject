@@ -8,6 +8,7 @@
 		"resolveJsonModule": true,
 		"lib": ["es2015"],
 		"target": "es5",
+		"jsx": "react",
 		"experimentalDecorators": true
 	},
 	"include": ["./src/**/*.ts"],
