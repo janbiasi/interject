@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { shallow, render } from 'enzyme';
+import { shallow, render } from 'enzyme';
 import { Module, InjectionToken } from '@interject/core';
 import { withInterject } from '../src/withInterject';
 
@@ -27,9 +27,8 @@ describe('withInterject', () => {
 	});
 
 	it('should inject a module with providers into a react component', () => {
-		
 		@Module({
-			providers: [{ provide: TEST_TOKEN, useValue: 'test' }]
+			providers: [{ provide: TEST_TOKEN, useValue: 'test' }],
 		})
 		class MyModule {
 			public provideAs = 'MyModule';
@@ -37,11 +36,11 @@ describe('withInterject', () => {
 
 			constructor(value: string) {
 				this.value = value;
-			};
+			}
 		}
 
 		const Component = ({ MyModule }: { MyModule: MyModule }) => {
-			return <p>Value is {MyModule.value}</p>
+			return <p>Value is {MyModule.value}</p>;
 		};
 		const MyComponent = withInterject(Component, MyModule);
 
@@ -51,7 +50,7 @@ describe('withInterject', () => {
 
 	it('should inject a module as singleton into a react component using persistant state', () => {
 		@Module({
-			providers: [{ provide: TEST_TOKEN, useValue: 'test' }]
+			providers: [{ provide: TEST_TOKEN, useValue: 'test' }],
 		})
 		class MyModule {
 			static creationCount: number = 0;
@@ -61,7 +60,7 @@ describe('withInterject', () => {
 			constructor(value: string) {
 				MyModule.creationCount++;
 				this.value = value;
-			};
+			}
 		}
 
 		const ComponentA = ({ MyModule }: { MyModule: MyModule }) => <p>A: {MyModule.value}</p>;

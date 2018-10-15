@@ -16,7 +16,7 @@
 		"test": "lerna run test",
 		"test-watch": "lerna run test-watch",
 		"build": "lerna run build",
-		"prettier": "prettier ./**/*.{json,js,ts} --write",
+		"prettier": "prettier '**/**/**/*.{json,js,ts,tsx}' --write",
 		"version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
 	},
 	"repository": {
@@ -27,16 +27,7 @@
 		"npm": ">=6",
 		"node": ">=8"
 	},
-	"keywords": [
-		"di",
-		"dependency",
-		"injection",
-		"dependency",
-		"injection",
-		"inject",
-		"react",
-		"vue"
-	],
+	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "vue"],
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {

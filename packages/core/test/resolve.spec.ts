@@ -20,14 +20,7 @@ describe('resolve', () => {
 			const tryResolveToken = () => {
 				// will fail as the token is whether registered to the injection map
 				// nor to the injector itself or any parent injector
-				resolveToken(
-					token,
-					undefined,
-					EMPTY_INJECTION_MAP,
-					injector,
-					undefined,
-					DEFAULT_INJECTION_FLAG
-				);
+				resolveToken(token, undefined, EMPTY_INJECTION_MAP, injector, undefined, DEFAULT_INJECTION_FLAG);
 			};
 
 			expect(tryResolveToken).toThrowError();

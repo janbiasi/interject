@@ -63,8 +63,8 @@ describe('utils', () => {
 		it('should stringify other values', () => {
 			expect(stringify(10)).toEqual('10');
 			expect(stringify(NaN)).toEqual('undefined');
-			expect(stringify([1,2,3])).toEqual('1,2,3');
-			expect(stringify({a: 1})).toEqual('[object Object]'); // TODO: better stringify case
-		})
+			expect(stringify([1, 2, 3])).toEqual('1,2,3');
+			expect(stringify({ a: 1 })).toEqual('[object Object]'); // TODO: better stringify case
+		});
 	});
 });

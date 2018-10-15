@@ -15,16 +15,7 @@
 		"type": "git",
 		"url": "git+https://github.com/janbiasi/flawless-di.git"
 	},
-	"keywords": [
-		"di",
-		"dependency",
-		"injection",
-		"dependency",
-		"injection",
-		"inject",
-		"react",
-		"react di"
-	],
+	"keywords": ["di", "dependency", "injection", "dependency", "injection", "inject", "react", "react di"],
 	"author": "Jan Biasi <biasijan@gmail.com> (http://janbiasi.ch)",
 	"license": "MIT",
 	"bugs": {
@@ -55,10 +46,7 @@
 		"react-dom": ">=16.0.0<17.0.0"
 	},
 	"jest": {
-		"roots": [
-			"<rootDir>",
-			"<rootDir>/test"
-		],
+		"roots": ["<rootDir>", "<rootDir>/test"],
 		"transform": {
 			"^.+\\.tsx?$": "ts-jest"
 		},
@@ -66,23 +54,12 @@
 		"collectCoverage": true,
 		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
 		"collectCoverageFrom": ["**/*.ts"],
-		"coveragePathIgnorePatterns": [
-			"<rootDir>/test/__snapshots__",
-			"<rootDir>/src/index.ts"
-		],
-		"moduleFileExtensions": [
-			"js",
-			"jsx",
-			"ts",
-			"tsx",
-			"json"
-		],
+		"coveragePathIgnorePatterns": ["<rootDir>/test/__snapshots__", "<rootDir>/src/index.ts"],
+		"moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json"],
 		"globals": {
 			"ts-jest": {
 				"diagnostics": {
-					"ignoreCodes": [
-						151001
-					]
+					"ignoreCodes": [151001]
 				}
 			}
 		}

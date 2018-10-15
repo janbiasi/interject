@@ -35,7 +35,7 @@ export function Injectable({ scope, requires }: IInjectableOptions = INJECTABLE_
 
 export interface IModuleOptions {
 	providers?: Array<IConstructable<any> | Provider>;
-	parent?: CommonInjector
+	parent?: CommonInjector;
 }
 
 const MODULE_DEFAULT_OPTS = {
@@ -81,9 +81,12 @@ export function internalModuleDecoratorFactory<T extends IConstructable<any>>(
 
 export function Module({ providers, parent }: IModuleOptions = MODULE_DEFAULT_OPTS) {
 	return <T extends { new (...args: any[]): any }>(Factory: T) => {
-		internalModuleDecoratorFactory({
-			providers,
-			parent
-		}, Factory);
+		internalModuleDecoratorFactory(
+			{
+				providers,
+				parent,
+			},
+			Factory
+		);
 	};
 }

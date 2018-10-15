@@ -11,7 +11,7 @@ export const internalBootstrapFactory = <T>(ModuleFactory: IConstructable<T>): T
 	const instance = new ModuleFactory(...providers);
 
 	return instance;
-}
+};
 
 export function bootstrap<T>(ModuleFactory: IConstructable<T>): T {
 	return internalBootstrapFactory(ModuleFactory);

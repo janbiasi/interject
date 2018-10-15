@@ -1,4 +1,4 @@
-import { LookupFlags } from "./Flags";
+import { LookupFlags } from './Flags';
 
 export interface IInjection {
 	token: any;

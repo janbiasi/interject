@@ -4,7 +4,7 @@ import { InjectionToken } from './InjectionToken';
 import { InjcetionFlags, LookupFlags } from './Flags';
 import { Provider, IValueProvider, IExistingProvider, IClassProvider, IFactoryProvider } from './Provider';
 import { Injectable, Module, internalModuleDecoratorFactory } from './decorators';
-import { bootstrap, internalBootstrapFactory } from './bootstrap';
+import { bootstrap, internalBootstrapFactory } from './bootstrap';
 
 export {
 	// basic core
@@ -27,5 +27,5 @@ export {
 	Injectable,
 	Module,
 	// application
-	 bootstrap
+	bootstrap,
 };

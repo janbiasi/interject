@@ -5,8 +5,8 @@ describe('InjectionToken', () => {
 		const token = new InjectionToken('creatable');
 
 		expect(token).toMatchSnapshot();
-        expect(token.toString()).toEqual('InjectionToken creatable');
-        expect(token.injectable).toBeDefined();
+		expect(token.toString()).toEqual('InjectionToken creatable');
+		expect(token.injectable).toBeDefined();
 		expect(token.injectable.factory()).toBe(undefined);
 		expect(token.injectable.scope).toEqual('root');
 	});

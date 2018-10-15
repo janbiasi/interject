@@ -33,7 +33,7 @@ function createWebpackConfig(opts) {
 			plugins: [
 				new TsConfigWebpackPlugin({
 					mode: 'production',
-					configFile: path.join(opts.path, 'tsconfig.json')
+					configFile: path.join(opts.path, 'tsconfig.json'),
 				}),
 			],
 		},
@@ -51,7 +51,7 @@ function createWebpackConfig(opts) {
 			plugins: [
 				new TsConfigWebpackPlugin({
 					mode: 'development',
-					configFile: path.join(opts.path, 'tsconfig.json')
+					configFile: path.join(opts.path, 'tsconfig.json'),
 				}),
 				new HtmlWebpackPlugin({
 					title: `Interject HTML Testing`,

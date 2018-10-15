@@ -4,7 +4,7 @@
 		"rootDir": "./",
 		"baseUrl": "./",
 		"experimentalDecorators": true,
-        "allowJs": true
+		"allowJs": true
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["dist"]

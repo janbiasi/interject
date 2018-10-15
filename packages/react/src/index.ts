@@ -1,2 +1,2 @@
 export { withInterject } from './withInterject';
-export { ReactProvidableModule } from './utils';
+export { ReactProvidableModule } from './utils';
