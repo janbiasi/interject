@@ -4,5 +4,8 @@ node_js:
   - "9"
   - "8"
 before_script:
+  - npm install codecov -g
   - npm run build
   - npm run bootstrap
+after_success:
+  - codecov
