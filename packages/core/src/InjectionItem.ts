@@ -6,6 +6,7 @@ export interface IInjection {
 	useNew: boolean;
 	dependencies: IInjectionDependency[];
 	value: any;
+	useExisting: any;
 }
 
 export interface IInjectionDependency {

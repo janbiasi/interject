@@ -1,7 +1,7 @@
 import { CommonInjector } from './CommonInjector';
 import { InjcetionFlags, LookupFlags } from './Flags';
 import { IInjection, IInjectionDependency } from './InjectionItem';
-import { CONCAT, IDENT, THROW_IF_NOT_FOUND, stringify } from './utils';
+import { CONCAT, IDENT, THROW_IF_NOT_FOUND, stringify, CIRCULAR } from './utils';
 import { Provider, IFactoryProvider, IClassProvider, IValueProvider, IExistingProvider } from './Provider';
 import { IConstructable } from './Constructable';
 
@@ -20,7 +20,11 @@ export const resolveToken = (
 		return parent.get(token, notFoundValue, InjcetionFlags.Default);
 	}
 
-	if (injection.useNew && !injection.value) {
+	if (injection.useExisting) {
+		// we should use another token to resolve the dependency, even if 
+		// the token was already resolved, the dep might have changed
+		value = injection.value = injections.get(injection.useExisting).value;
+	} else if (injection.useNew && !injection.value) {
 		// class was not instanciated yet, create and save the new instance
 		const childDependencies = resolveTokenDependencies(injection, injections, parent);
 		value = injection.value = new (injection.factory as IConstructable<any>)(...childDependencies);
@@ -38,8 +42,9 @@ export const resolveToken = (
 };
 
 export const resolveInjectableProvider = (provider: Provider, injections: Map<any, IInjection>) => {
-	const token = provider.provide;
+	let token = provider.provide;
 	let value: any;
+	let useExisting: any = undefined;
 	let useNew: boolean = false;
 	let factory: Function;
 	let dependencies: IInjectionDependency[] = [];
@@ -66,8 +71,9 @@ export const resolveInjectableProvider = (provider: Provider, injections: Map<an
 			factory = CONCAT;
 		}
 	} else if ((provider as IExistingProvider).useExisting) {
-		// if we should use an exisiting one we'll use the IDENT method (simple i/o)
-		factory = IDENT;
+		// if we should use an exisiting one we'll use the CIRCULAR method
+		factory = CIRCULAR;
+		useExisting = (provider as IExistingProvider).useExisting;
 	}
 
 	injections.set(token, <IInjection>{
@@ -76,6 +82,7 @@ export const resolveInjectableProvider = (provider: Provider, injections: Map<an
 		factory,
 		value,
 		dependencies,
+		useExisting
 	});
 };
 

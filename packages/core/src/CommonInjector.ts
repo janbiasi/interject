@@ -7,7 +7,7 @@ import { IInjectable } from './Injectable';
 import { Injector } from './Injector';
 
 // runtime
-import { setCurrentInjector, getCurrentInjector } from './runtime';
+import { getCurrentInjector } from './runtime';
 
 // core providers
 import VersionProvider from './platform/providers/Version';
