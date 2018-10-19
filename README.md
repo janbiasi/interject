@@ -8,10 +8,13 @@ This framework is inspired by Angular's dependency injection concept but it's fa
 In most frontend application you'll have multiple dependencies, and sometimes you also have kinda like "circular" or "multi-depth" dependencies which can't be resolved or conflicts inside your application build.
 Sometimes you also just want a simple possibility to manage singletons, factories and values you need in different parts of the application without caring about how to distribute or allocate them. The `Interject` library will help you managing your dependencies with ease!
 
+The following examples are written with TypeScript and decorators, if you plan to just use the most 'barebone' version make sure you checkout the [Interject API](docs/interject-api.md) for using the core as it is.
+
 ### Definining injectables
 
 Each injectable is defined with a key. The key is not only a string, it's rather a token. Inside the interject framework they're called `InjectionToken`. The key can also be any type of constructable class (not object!). Dependencies defined by a token are registered inside an Injector which then can be provided by a method called `get`. The dependency will automatically be instanciated/called/exposed by the injector and provided to your module.
 
+> TypeScript
 ```ts
 import { Injectable, InjectionToken } from '@interject/core';
 
@@ -24,15 +27,38 @@ export const injectableValue = {
 }
 ```
 
+> JavaScript
+```js
+const { Injectable, InjectionToken } = require('@interject/core');
+
+class InjectableService {
+    someMethod(): { a: 10 } {
+        return { a: 10 };
+    };
+}
+
+exports.InjectableService = {
+    provide: InjectableService,
+    useClass: InjectableService
+};
+
+exports.injectableValue = {
+    provide: new InjectionToken<string>('injectable value token'),
+    useValue: 'Hello there!'
+};
+```
+
 ### Defining modules
 
-Each module defines an application entrypoint. The module than can be bootstrapped via the `bootstrap` method exposed by the core. This will resolve all providers and subproviders for each injectable and return the module with all providers needed.
+Each module defines an application entrypoint. The module than can be bootstrapped via the `bootstrap` method exposed by the core. This will resolve all providers and subproviders for each injectable and return the module with all providers needed. In the background, modules simply manage `Injectors` inside which manage you dependencies and inject it into the constructor of the class - which you don't have to use if you don't want to _(see: JavaScript)_!
 
+> TypeScript
 ```ts
 import { Module, bootstrap } from '@interject/core';
 
 @Module({
     providers: [
+        InjectableService, // taken from above
         { provide: new InjectionToken<string>('test'), useValue: 'test' }
     ]
 })
@@ -44,274 +70,35 @@ const inst = bootstrap(MyModule);
 console.log(inst.test); // 'test'
 ```
 
+> JavaScript
+```ts
+const { CommonInjector, InjectionToken } = require('@interject/core');
+const InjectableService = require('./InjectableService');
+
+const testToken = new InjectionToken<string>('test')
+
+const injector = CommonInjector.create(
+    providers: [
+        InjectableService, // taken from above
+        { provide: testToken, useValue: 'test' }
+    ]
+});
+
+console.log(injector.get(testToken)); // 'test'
+console.log(injector.get(InjectableService).someMethod); // { a: 10 }
+```
+
 # Providers
 
 There are a few provider-types you should be aware of. Each providers is built for a certain use-case. You'll find a detailed description of each below.
 
-* [ClassProvider](#class-provider)
-* [ValueProvider](#value-provider)
-* [FactoryProvider](#factory-provider)
-* [ExistingProvider](#existing-provider) _(meta)_
-* [Built-in providers to use](#built-in-providers-to-use)
-
-## ClassProvider
-
-A class provider is typically used for building services as singleton. The module afterwards will automatically take care of that the service will only be instanciated once. Therefor is a decorator to help you creating injectable services with the name `Injectable`. It can be used directly as a decorator for flawless integration into existing code bases.
-
-```ts
-import { Module, Injectable } from '@interject/core';
-
-@Injectable()
-class MyService {
-    public get value() {
-        return 10;
-    }
-}
-
-@Module({
-    providers: [MyService]
-})
-class MyModule {
-    constructor(private service: MyService) {}
-}
-```
-
-Sometimes you also want to swap classes based on certain environment conditions, for example a logger; it might should output other information in dev mode than in production or even replace the whole log mechanism. Therefor you can also create class providers dynamically inside the code.
-
-```ts
-import { Injectable, InjectionToken } from '@interject/core';
-
-interface Logger {
-    log(...args: any): void;
-}
-
-const LoggerToken = new InjectionToken<Logger>('logger');
-
-class DevLogger implements Logger {
-    log(...args: any[]) { console.log.apply(console, args) }
-}
-
-class ProdLogger implements Logger {
-    log(...args: any[]) { /* do nothing */ }
-}
-
-const LoggerProvider = {
-    provide: LoggerToken,
-    useClass:
-        process.env.NODE_ENV === 'development'
-            ? DevLogger
-            : ProdLogger
-}
-```
-
-#### Requiring other injectables
-
-It is also possible to inject other injectables into the injectable class by defining a `requires` property.
-
-```ts
-import { Injectable, InjectionToken } from '@interject/core';
-
-@Injectable({
-    requires: [
-        { useValue: 10, provide: someToken }
-    ]
-})
-class MyService {
-    constructor(private value: number) {}
-}
-
-@Module({
-    providers: [MyService]
-})
-class MyModule {}
-```
-
-## ValueProvider
-
-As the name says, you can also provide simple values as injectables for example if you need a global configuration or version manager.
-
-```ts
-import { InjectionToken } from '@interject/core';
-
-type ConfigType = { env: 'production' | 'development' };
-
-const ConfigToken = new InjectionToken<ConfigType>('config');
-
-const ConfigProvider = {
-    provide: ConfigToken,
-    // value can be defined here
-    useValue: {
-        env: 'production'
-    }
-};
-```
-
-#### Enable multiple values _(currently unsupported / default behaviour)_
-If you intend to get multiple values from a value provider e.g. for like a language config,
-you'll need to set this flag to get all values from a token and not just the latest.
-
-> **Important**: this is not supported atm. The example shows how the feature will be expected to work in the future! It is not recommended to use more than one provider with the same token.
-
-```ts
-import { InjectionToken, Module } from '@interject/core';
-
-type Language = 'de' | 'en' | 'it' | 'fr';
-
-const LanguageToken = new InjectionToken<Language[]>('languages');
-
-@Module({
-    providers: [
-        { provide: LanguageToken, useValue: 'de', multi: true },
-        { provide: LanguageToken, useValue: 'en', multi: true }
-    ]
-})
-class LanguageModule {
-    constructor(private languages: Language[]) {
-        console.log(languages); // ['de', 'en']
-    }
-}
-```
-
-If you wont add a multi flag to the provider itself it would just output `en` because it was the latest value provided!.
-
-## FactoryProvider
-
-Factories can also be provided as injectable, which will just be executed once.
-The result will be cached inside the corresponding module and will be returned on each request.
-
-```ts
-import { InjectionToken } from '@interject/core';
-
-const FactoryToken = new InjectionToken<ConfigType>('my factory');
-
-const FactoryProvider = {
-    provide: FactoryToken,
-    // value can be defined here
-    useFactory: () => 'some return value'
-};
-```
-
-## Built-in providers to use
-
-#### VersionProvider
-```ts
-import { CommonInjector, VersionProvider, VersionProviderToken } from '@interject/core';
-
-const injector = CommonInjector.create({
-    providers: [VersionProvider]
-});
-
-console.log(injector.get(VersionProviderToken)); // 'v0.1.0'
-```
-
-#### Requiring other injectables
-
-It is also possible to inject other injectables into the injectable class by defining a `requires` property.
-
-```ts
-import { Injectable, InjectionToken } from '@interject/core';
-
-export const FactoryProvider = {
-    provide: new InjectionToken<string[]>('somefactory'),
-    useFactory: (someValue: string) => ['hello', 'there', someValue],
-    requires: [
-        { useValue: 'you!', provide: someToken }
-    ]
-};
-
-// will inject ['hello', 'there', 'you!']
-```
-
-## ExistingProvider
-
-Use another token for resolving the values of the current token. This can be helpful for overwriting injectables depending on conditions.
-
-```ts
-import { Injectable } from '@interject/core';
-
-@Injectable()
-class Greeting {
-    salutation = 'Hello';
-}
- 
-@Injectable()
-class FormalGreeting extends Greeting {
-    salutation = 'Greetings';
-}
-
-@Module({
-    providers: [
-        FormalGreeting,
-        { provide: Greeting, useExisting: FormalGreeting }
-    ]
-})
-class MyModule {}
-```
-
-# Interject API
-You can also use the Injector as standalone version of the process instead of working with modules and TypeScript annotations. Therefor is a list below with all different parts of the library.
-
-* [InjectionToken](#injectiontoken)
-* [CommonInjector](#commoninjector)
-    * [Injector](#injector)
-* [Runtime](#runtime)
-    * [Injector scope](#injector-scope)
-    * [Metadata Reflection](#metadata-reflection)
-
-## InjectionToken
-Each injectable is defined with a key. The key is not only a string, it's rather a token. Inside the interject framework they're called `InjectionToken`. The key can also be any type of constructable class (not object!). Dependencies defined by a token are registered inside an Injector which then can be provided by a method called `get`. The dependency will automatically be instanciated/called/exposed without doing anything.
-
-```ts
-import { CommonInjector, InjectionToken } from '@interject/core';
-
-class MyService {
-    serialize(input: any): string {
-        return JSON.stringify(input);
-    }
-}
-
-const myFactory = () => 100;
-
-const myFactoryToken = new InjectionToken<() => number>('some id here');
-const myValueToken = new InjectionToken<string[]>('another id here');
-const myServiceToken = new InjectionToken<MyService>('another id here');
-
-const injector = CommonInjector.create({
-    providers: [
-        { provide: myFactoryToken, useFactory: myFactory },
-        { provide: myValueToken, useValue: ['hello', 'world']},
-        { provide: myServiceToken, useClass: MyService }
-    ]
-});
-
-injector.get(myFactroyToken); // 100
-injector.get(myValueToken); // ['hello', 'world']
-injector.get(myServiceToken); // instanceof MyService { serialize(arg) { JSON.stringify(arg) } }
-```
-
-## CommonInjector
-The CommonInjector is an abstract class which defines the main API of an injector. It is later implemented by the `Injector` class. You can create your injectors by a static method `.create()` and it will return you the correct injector instance with your providers.
-
-> **Why do we need to use CommonInjector.create instead of new Injector?**: Well, this is for enabling more flexibility regarding the injector implementation. We could also swap the Injector implementation on the fly without breaking the API or your implementations. 
-
-### Injector
-
-This is the main implementation of the `CommonInjector` which implements all needed methods. It is NOT recommended to use this injector directly as it will destroy parent inheritance etc.
-
-## Runtime
-tbd.
-
-### Injector Scope
-tbd.
-
-### Metadata Reflection
-
-##### Available definition keys
-
-* **custom:injectable** (defined on `@Injectable` classes)
-* **custom:token** (defined on `@Injectable` classes)
-* **custom:injector** (defined on `@Module` classes)
-* **custom:bootstrap** (defined on `@Module` classes)
+* [ClassProvider](docs/class-provider.md)
+* [ValueProvider](docs/value-provider.md)
+* [FactoryProvider](docs/factory-provider.md)
+* [ExistingProvider](docs/existing-provider.md) _(meta)_
+* [Built-in providers to use](docs/platform/)
+
+If you're interested in building plugins for the Interject framework, you might checkout the `Metadata Reflection` API as interject heavily uses it for saving injection information on classes/objects. Please referr to the [Metadata Documentation](docs/metadata-reflection.md) for further reading.
 
 # FAQs
 
