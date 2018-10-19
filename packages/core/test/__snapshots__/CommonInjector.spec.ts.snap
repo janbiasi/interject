@@ -30,6 +30,7 @@ Injector {
         },
         "metadataName": "InjectionToken",
       },
+      "useExisting": undefined,
       "useNew": false,
       "value": 20,
     },
@@ -53,6 +54,71 @@ Injector {
         },
         "metadataName": "InjectionToken",
       },
+      "useExisting": undefined,
+      "useNew": false,
+      "value": "0.1.0",
+    },
+  },
+  "parent": NullInjector {},
+  "source": "RootInjector",
+}
+`;
+
+exports[`CommonInjector should return the current active injector 1`] = `
+Injector {
+  "_injections": Map {
+    [Function] => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": [Function],
+      "useNew": false,
+      "value": [Circular],
+    },
+    InjectionToken {
+      "_id": "simpleProviderToken",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "simpleProviderToken",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useExisting": undefined,
+      "useNew": false,
+      "value": 20,
+    },
+    InjectionToken {
+      "_id": "version",
+      "injectable": Object {
+        "factory": [Function],
+        "scope": "root",
+        "value": undefined,
+      },
+      "metadataName": "InjectionToken",
+    } => Object {
+      "dependencies": Array [],
+      "factory": [Function],
+      "token": InjectionToken {
+        "_id": "version",
+        "injectable": Object {
+          "factory": [Function],
+          "scope": "root",
+          "value": undefined,
+        },
+        "metadataName": "InjectionToken",
+      },
+      "useExisting": undefined,
       "useNew": false,
       "value": "0.1.0",
     },

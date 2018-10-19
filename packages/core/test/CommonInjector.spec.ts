@@ -5,6 +5,10 @@ import { NullInjector, CommonInjector } from '../src/CommonInjector';
 const NULL_PROVIDER_TOKEN = new InjectionToken<null>('null-provider');
 
 describe('CommonInjector', () => {
+	it('should provide a toString method', () => {
+		expect(CommonInjector.toString()).toEqual('CommonInjector');
+	});
+	
 	it('should provide a static NullInjector', () => {
 		expect(CommonInjector.NULL).toBeInstanceOf(NullInjector);
 	});
@@ -29,6 +33,10 @@ describe('CommonInjector', () => {
 		expect(withoutProviders.toString()).toEqual(
 			'Injector { CommonInjector, InjectionToken simpleProviderToken, InjectionToken version }'
 		);
+	});
+
+	it('should return the current active injector', () => {
+		expect(CommonInjector.currentInjector).toMatchSnapshot();
 	});
 
 	describe('NullInjector', () => {

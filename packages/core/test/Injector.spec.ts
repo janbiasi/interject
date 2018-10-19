@@ -235,5 +235,20 @@ describe('Injector', () => {
 				expect(factoryCreationCounter).toEqual(1);
 			});
 		});
+
+		describe('ExistingProvider', () => {
+			const baseToken = new InjectionToken<{ value: string }>('base');
+			const refToBaseToken = new InjectionToken<{ value: string }>('refToBase');
+
+			const injector = CommonInjector.create({
+				providers: [
+					{ provide: baseToken, useValue: { value: 'test' } },
+					{ provide: refToBaseToken, useExisting: baseToken },
+				],
+			});
+
+			expect(injector.get(baseToken).value).toEqual('test');
+			expect(injector.get(refToBaseToken).value).toEqual('test');
+		})
 	});
 });
