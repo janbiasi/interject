@@ -92,10 +92,10 @@ console.log(injector.get(InjectableService).someMethod); // { a: 10 }
 
 There are a few provider-types you should be aware of. Each providers is built for a certain use-case. You'll find a detailed description of each below.
 
-* [ClassProvider](docs/class-provider.md)
-* [ValueProvider](docs/value-provider.md)
-* [FactoryProvider](docs/factory-provider.md)
-* [ExistingProvider](docs/existing-provider.md) _(meta)_
+* [ClassProvider](docs/providers/class-provider.md)
+* [ValueProvider](docs/providers/value-provider.md)
+* [FactoryProvider](docs/providers/factory-provider.md)
+* [ExistingProvider](docs/providers/existing-provider.md) _(meta)_
 * [Built-in providers to use](docs/platform/)
 
 If you're interested in building plugins for the Interject framework, you might checkout the `Metadata Reflection` API as interject heavily uses it for saving injection information on classes/objects. Please referr to the [Metadata Documentation](docs/metadata-reflection.md) for further reading.
